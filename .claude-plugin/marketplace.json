@@ -9,7 +9,7 @@
       "name": "idees-repas",
       "source": "./plugins/idees-repas",
       "description": "Idées de plats et de menus de la semaine tirées d'un répertoire familial (~600 plats), selon la saison, le temps disponible et les présences.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     }
   ]
 }

@@ -33,12 +33,9 @@ Claude Code :
 /plugin install idees-repas@agaches
 ```
 
-App Claude (web ou mobile) : zipper le dossier `skills/idees-repas/`, puis sur claude.ai
+App Claude (web ou mobile) : télécharger [idees-repas.zip](https://github.com/agaches/claude-plugins/releases/download/idees-repas-v0.1.1/idees-repas.zip)
+(page [Releases](https://github.com/agaches/claude-plugins/releases)), puis sur claude.ai
 « + » → « Create skill » → importer le zip. La skill est ensuite disponible dans l'app mobile.
-
-```
-cd plugins/idees-repas/skills && python3 -m zipfile -c idees-repas.zip idees-repas
-```
 
 ## Prérequis
 
@@ -51,11 +48,16 @@ Le vivier est `skills/idees-repas/references/plats.md`, un simple tableau Markdo
 ```
 | Nom | Catégorie | Cuisson | Source | Ingrédients clés |
 |---|---|---|---|---|
-| Gratin de courgettes | Légumes | Four | Perso | courgettes, gruyère |
+| Gratin de coquillettes au jambon | Quiches, tartes, pâtes et riz | Four | Perso | coquillettes, jambon, gruyère |
 ```
 
 Ajoutez vos plats de famille, retirez ceux que vous n'aimez pas : une ligne par plat, rien
-d'autre à modifier.
+d'autre à modifier. Cuisson : `Four`, `Poêle`, `Sans cuisson` ou `Autre` ; source : `Perso`
+ou `Livre p.X`.
+
+- App Claude : dézipper, modifier, rezipper, puis réimporter sur claude.ai en remplaçant
+  l'ancienne skill.
+- Claude Code : modifier dans un fork du repo et installer le plugin depuis ce fork.
 
 ## Sources
 
