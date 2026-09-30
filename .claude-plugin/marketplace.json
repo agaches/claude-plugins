@@ -10,6 +10,12 @@
       "source": "./plugins/idees-repas",
       "description": "Idées de plats et de menus de la semaine tirées d'un répertoire familial (~600 plats), selon la saison, le temps disponible et les présences.",
       "version": "0.1.1"
+    },
+    {
+      "name": "light-gtd",
+      "source": "./plugins/light-gtd",
+      "description": "Gestion des tâches façon GTD dans un Google Sheets tenu par Claude : capture par dictée, une ligne par sujet, une colonne par jour, point du matin, succès du jour et de la semaine, revue hebdo.",
+      "version": "0.1.0"
     }
   ]
 }

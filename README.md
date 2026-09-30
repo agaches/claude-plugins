@@ -16,6 +16,7 @@ Mise à jour du catalogue : `/plugin marketplace update agaches`
 | Plugin | Description |
 |---|---|
 | [idees-repas](plugins/idees-repas) | Idées de plats et menus de la semaine, selon la saison et les présences |
+| [light-gtd](plugins/light-gtd) | Gestion des tâches GTD dans un Google Sheets : dictée, point du matin, succès, revue hebdo |
 
 ## Ajouter un plugin
 

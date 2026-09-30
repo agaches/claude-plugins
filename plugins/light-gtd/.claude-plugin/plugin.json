@@ -1,0 +1,10 @@
+{
+  "name": "light-gtd",
+  "version": "0.1.0",
+  "description": "Gestion des tâches façon GTD dans un Google Sheets tenu par Claude : capture par dictée, une ligne par sujet, une colonne par jour, point du matin, succès du jour et de la semaine, revue hebdo.",
+  "author": {
+    "name": "agaches"
+  },
+  "license": "MIT",
+  "keywords": ["gtd", "tâches", "productivité", "google-sheets", "google-agenda"]
+}
