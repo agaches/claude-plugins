@@ -41,11 +41,17 @@ Claude Code :
 Puis lancer `/light-gtd:installer`. Il crée dans votre Google Drive le fichier `suivi_taches`
 (onglets Suivi, Terminées, README) et, dans votre agenda, la revue hebdo du samedi 9h.
 
-App Claude (web ou mobile) : télécharger les 6 zips de la release
-[light-gtd-v0.1.0](https://github.com/agaches/claude-plugins/releases/tag/light-gtd-v0.1.0),
-puis pour chacun, sur claude.ai : « + » → « Create skill » → importer le zip. Les 6 sont
-nécessaires : les skills de rituel s'appuient sur `suivi-des-taches`. Activer ensuite les
-connecteurs Google, puis demander « installe le suivi des tâches ».
+App Claude (Cowork, sur ordinateur) : **Personnaliser > Plugins**, puis au choix :
+
+- **Ajouter une marketplace** : `agaches/claude-plugins`, puis installer `light-gtd` ;
+- **Importer un fichier** : télécharger
+  [light-gtd.zip](https://github.com/agaches/claude-plugins/releases/download/light-gtd-v0.1.0/light-gtd.zip)
+  (release [light-gtd-v0.1.0](https://github.com/agaches/claude-plugins/releases/tag/light-gtd-v0.1.0))
+  et l'importer.
+
+Le plugin est enregistré sur le compte : ses skills sont ensuite disponibles dans le chat, y
+compris sur mobile. Activer les connecteurs Google, puis demander « installe le suivi des
+tâches ».
 
 ## Données
 
