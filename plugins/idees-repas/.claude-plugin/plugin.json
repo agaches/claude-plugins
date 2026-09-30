@@ -1,0 +1,10 @@
+{
+  "name": "idees-repas",
+  "version": "0.1.0",
+  "description": "Idées de plats et de menus de la semaine tirées d'un répertoire familial (~600 plats), selon la saison, le temps disponible et les présences.",
+  "author": {
+    "name": "agaches"
+  },
+  "license": "MIT",
+  "keywords": ["cuisine", "repas", "menu", "famille"]
+}

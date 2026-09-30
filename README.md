@@ -15,7 +15,7 @@ Mise à jour du catalogue : `/plugin marketplace update agaches`
 
 | Plugin | Description |
 |---|---|
-| _(aucun pour l'instant)_ | |
+| [idees-repas](plugins/idees-repas) | Idées de plats et menus de la semaine, selon la saison et les présences |
 
 ## Ajouter un plugin
 
