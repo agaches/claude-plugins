@@ -1,22 +1,29 @@
 ---
 name: suivi-des-taches
-description: Tient à jour le fichier Google Sheets `suivi_taches` de l'utilisateur (méthode GTD, une ligne par sujet, une colonne par jour). À utiliser dès que l'utilisateur dicte ou écrit quelque chose sur ses tâches, actions ou choses à faire, ce qu'il a fait, une nouvelle tâche, une tâche finie, en attente ou à relancer, un rappel à poser ("j'ai envoyé le mail au plombier", "ajoute : renouveler le passeport avant fin novembre", "le devis est validé, c'est bouclé", "rappelle-moi de relancer la mairie jeudi"). Sert aussi de référence (fichier, structure, règles) aux skills point-du-matin, succes-du-soir, succes-de-la-semaine et revue-hebdo.
+description: Tient à jour le fichier Google Sheets de suivi des tâches de l'utilisateur, `suivi_taches` par défaut (méthode GTD, une ligne par sujet, une colonne par jour). À utiliser dès que l'utilisateur dicte ou écrit quelque chose sur ses tâches, actions ou choses à faire, ce qu'il a fait, une nouvelle tâche, une tâche finie, en attente ou à relancer, un rappel à poser ("j'ai envoyé le mail au plombier", "ajoute : renouveler le passeport avant fin novembre", "le devis est validé, c'est bouclé", "rappelle-moi de relancer la mairie jeudi"). Sert aussi de référence (fichier, structure, règles) aux skills point-du-matin, succes-du-soir, succes-de-la-semaine et gtd-revue.
 ---
 
 # Suivi des tâches
 
-Le fichier `suivi_taches` est le système de confiance de l'utilisateur : il dicte, Claude range.
+Le fichier de suivi est le système de confiance de l'utilisateur : il dicte, Claude range.
 Une ligne = un sujet à mener jusqu'au bout. Une case de jour = ce qui a été fait ce jour-là,
 puis la prochaine action.
 
 ## 1. Retrouver le fichier
 
-Aucun identifiant n'est connu à l'avance. Chercher dans Google Drive un Google Sheets dont le
-titre est exactement `suivi_taches` (`title = 'suivi_taches' and mimeType = 'application/vnd.google-apps.spreadsheet'`).
+Aucun identifiant n'est connu à l'avance, et le titre est choisi par l'utilisateur (défaut
+`suivi_taches`) : chercher le fichier par le marqueur écrit dans son onglet README, pas par son
+titre.
 
-- 1 résultat : l'utiliser.
-- 0 résultat : proposer de lancer l'installation (skill `installer`), ne rien créer soi-même.
-- Plusieurs : demander lequel utiliser.
+1. Recherche Drive : `fullText contains 'light-gtd-fichier-de-suivi' and owner = 'me' and mimeType = 'application/vnd.google-apps.spreadsheet'`.
+2. 0 résultat : chercher un fichier créé par la v0.1, sans marqueur :
+   `title = 'suivi_taches' and owner = 'me' and mimeType = 'application/vnd.google-apps.spreadsheet'`.
+   Trouvé : l'utiliser et proposer de relancer l'installation pour ajouter le marqueur.
+3. Toujours rien : un fichier tout juste créé peut ne pas être encore indexé. Demander le titre
+   du fichier et le chercher par titre exact. Sinon proposer l'installation (skill
+   `gtd-install`), ne rien créer soi-même.
+
+Plusieurs résultats : demander lequel utiliser.
 
 Connecteur Google Drive ou Google Sheets absent : le dire et renvoyer vers l'installation.
 
@@ -35,7 +42,7 @@ configuration). Détail complet et contenu initial : `references/modele-suivi-ta
 | Actions | Le sujet, préfixé `Perso : ` ou `Pro : ` |
 | Deadline | `JJ/MM/AAAA`, ou `Chaque jour` pour une routine |
 | Statut | `En cours`, `En attente` ou `Routine` |
-| Contexte | Défaut : `Tél`, `Ordi`, `Maison`, `Dehors`, `Courses`, `Voiture` |
+| Contexte | Défaut : `Appels`, `IT`, `Maison`, `Pro`, `Dehors`, `Achats`, `Corvées`, `Partout` |
 | Puis une colonne par jour | En-tête = date `JJ/MM` |
 
 Sections, de haut en bas, chacune ouverte par une ligne titre dont seule la colonne Actions est

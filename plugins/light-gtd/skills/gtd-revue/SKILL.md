@@ -1,6 +1,6 @@
 ---
-name: revue
-description: Conduit la revue hebdomadaire GTD du fichier de tâches `suivi_taches`. À utiliser quand l'utilisateur lance /revue ou demande la revue de la semaine ("on fait la revue", "revue hebdo", "on range les tâches").
+name: gtd-revue
+description: Conduit la revue hebdomadaire GTD du fichier de suivi des tâches. À utiliser quand l'utilisateur lance /gtd-revue ou demande la revue de la semaine ("on fait la revue", "revue hebdo", "on range les tâches").
 ---
 
 # Revue hebdo

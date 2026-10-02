@@ -1,6 +1,6 @@
 ---
 name: point-du-matin
-description: Donne le point du jour à partir du fichier de tâches `suivi_taches`. À utiliser quand l'utilisateur demande un point, un brief, sa journée ou quoi faire aujourd'hui ("fais-moi le point", "c'est quoi ma journée ?", "qu'est-ce que je fais aujourd'hui ?", "le point du matin", "j'ai 1 h, je fais quoi ?").
+description: Donne le point du jour à partir du fichier de suivi des tâches. À utiliser quand l'utilisateur demande un point, un brief, sa journée ou quoi faire aujourd'hui ("fais-moi le point", "c'est quoi ma journée ?", "qu'est-ce que je fais aujourd'hui ?", "le point du matin", "j'ai 1 h, je fais quoi ?").
 ---
 
 # Point du matin

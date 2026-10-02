@@ -1,6 +1,6 @@
 ---
 name: succes-de-la-semaine
-description: Fait le bilan positif de la semaine à partir du fichier de tâches `suivi_taches`. À utiliser quand l'utilisateur demande ses succès, son bilan ou le chemin parcouru sur la semaine ("mes succès de la semaine", "qu'est-ce que j'ai fait cette semaine ?", "le bilan de la semaine"), et en ouverture de la revue hebdo.
+description: Fait le bilan positif de la semaine à partir du fichier de suivi des tâches. À utiliser quand l'utilisateur demande ses succès, son bilan ou le chemin parcouru sur la semaine ("mes succès de la semaine", "qu'est-ce que j'ai fait cette semaine ?", "le bilan de la semaine"), et en ouverture de la revue hebdo.
 ---
 
 # Succès de la semaine
