@@ -1,6 +1,6 @@
-# Modèle du fichier `suivi_taches`
+# Modèle du fichier de suivi des tâches
 
-Source unique pour la création du fichier (skill `installer`) et pour la vérification de sa
+Source unique pour la création du fichier (skill `gtd-install`) et pour la vérification de sa
 structure. Tous les exemples sont fictifs, à remplacer par l'utilisateur.
 
 `JJ/MM` = date du jour de création. Couleurs en RVB 0-1 (format de l'API Google Sheets).
@@ -15,9 +15,9 @@ Valeurs (A1:E9) :
 | 2 | Tâches récurrentes | | | | |
 | 3 | Perso : exemple de routine (à remplacer) | Chaque jour | Routine | Maison | |
 | 4 | Actions perso | | | | |
-| 5 | Perso : exemple de tâche (à remplacer) | JJ/MM/AAAA (dans 7 jours) | En cours | Ordi | à faire : première action |
+| 5 | Perso : exemple de tâche (à remplacer) | JJ/MM/AAAA (dans 7 jours) | En cours | IT | à faire : première action |
 | 6 | Actions pro | | | | |
-| 7 | Pro : exemple de tâche pro (à remplacer) | | En cours | Ordi | à faire : première action |
+| 7 | Pro : exemple de tâche pro (à remplacer) | | En cours | IT | à faire : première action |
 | 8 | Global | | | | init fichier |
 
 Sans section pro (choix fait à l'installation) : supprimer les lignes 6 et 7, Global passe en ligne 6.
@@ -87,12 +87,17 @@ Colonnes de jours de plus de 2 mois : supprimées pendant la revue hebdo, après
 
 Configuration
 Agenda des tâches : Tâches
-Contextes : Tél, Ordi, Maison, Dehors, Courses, Voiture
+Contextes : Appels, IT, Maison, Pro, Dehors, Achats, Corvées, Partout
 Section Actions pro : oui
+
+Marqueur (ne pas modifier) : light-gtd-fichier-de-suivi
 ```
 
 Le bloc « Configuration » est lu par toutes les skills du plugin : garder le format
 `Clé : valeur`, une clé par ligne.
+
+La ligne « Marqueur » permet aux skills de retrouver le fichier par une recherche plein texte
+Drive, quel que soit son titre : l'écrire telle quelle, en dernière ligne de la colonne A.
 
 ## Vérification de structure (fichier existant)
 
@@ -103,6 +108,8 @@ Contrôler, sans rien modifier :
 3. Suivi, colonne A : titres `Tâches récurrentes`, `Actions perso`, (`Actions pro`), `Global`, dans cet ordre, `Global` en dernier.
 4. Terminées, ligne 4 : `Tâche`, `Date de fin`, `Deadline initiale`.
 5. README : bloc `Configuration` présent.
+6. README : ligne `Marqueur (ne pas modifier) : light-gtd-fichier-de-suivi` présente (absente
+   des fichiers créés par la v0.1).
 
 Chaque écart est listé avec la correction proposée. Aucune correction sans accord, aucun
 contenu effacé.

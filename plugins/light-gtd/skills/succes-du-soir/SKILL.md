@@ -1,6 +1,6 @@
 ---
 name: succes-du-soir
-description: Fait le bilan positif de la journée à partir du fichier de tâches `suivi_taches`. À utiliser quand l'utilisateur demande ce qu'il a fait ou accompli aujourd'hui, ses succès ou le bilan du jour ("qu'est-ce que j'ai fait aujourd'hui ?", "mes succès du jour", "le bilan de la journée", "j'ai avancé sur quoi ?").
+description: Fait le bilan positif de la journée à partir du fichier de suivi des tâches. À utiliser quand l'utilisateur demande ce qu'il a fait ou accompli aujourd'hui, ses succès ou le bilan du jour ("qu'est-ce que j'ai fait aujourd'hui ?", "mes succès du jour", "le bilan de la journée", "j'ai avancé sur quoi ?").
 ---
 
 # Succès du soir

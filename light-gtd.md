@@ -18,9 +18,9 @@ C'est le cœur de la méthode GTD (*Getting Things Done*) : tout sortir de sa t�
 dans un système de confiance. Avec un bonus que GTD n'offre pas : l'historique jour par jour, qui
 montre ce qui avance et ce qui stagne. Et, le soir, ce qui a été accompli.
 
-## Le fichier `suivi_taches`
+## Le fichier de suivi
 
-Un Google Sheets dans votre Drive, lisible par vous comme par Claude, sur tous vos appareils.
+Un Google Sheets dans votre Drive (`suivi_taches` par défaut, nom au choix), lisible par vous comme par Claude, sur tous vos appareils.
 Onglet **Suivi** (exemple fictif) :
 
 | Actions | Deadline | Statut | Contexte | 14/10 | 15/10 |
@@ -28,10 +28,10 @@ Onglet **Suivi** (exemple fictif) :
 | **Tâches récurrentes** | | | | | |
 | Perso : sortir les poubelles | Chaque jour | Routine | Maison | fait | |
 | **Actions perso** | | | | | |
-| Perso : faire réparer la porte du garage | 31/10/2026 | En attente | Tél | devis demandé, à faire : attendre le devis | devis reçu, à faire : valider le devis |
-| Perso : renouveler le passeport | 30/11/2026 | En cours | Ordi | | à faire : prendre rendez-vous en mairie |
+| Perso : faire réparer la porte du garage | 31/10/2026 | En attente | Appels | devis demandé, à faire : attendre le devis | devis reçu, à faire : valider le devis |
+| Perso : renouveler le passeport | 30/11/2026 | En cours | IT | | à faire : prendre rendez-vous en mairie |
 | **Actions pro** | | | | | |
-| Pro : préparer la présentation trimestrielle | 24/10/2026 | En cours | Ordi | plan fait, à faire : rédiger les slides | |
+| Pro : préparer la présentation trimestrielle | 24/10/2026 | En cours | IT | plan fait, à faire : rédiger les slides | |
 | **Global** | | | | | |
 
 Deux autres onglets : **Terminées** (les tâches bouclées, avec des compteurs) et **README** (le
@@ -45,7 +45,7 @@ mode d'emploi, et vos réglages : agenda, contextes, section pro).
 | Le matin | « fais-moi le point » | Les grands sujets, les deadlines proches, ce qui attend une relance ou stagne, et 3 actions suggérées regroupées par contexte. |
 | Le soir | « qu'est-ce que j'ai fait aujourd'hui ? » | Le bilan positif de la journée, sans culpabiliser. |
 | La semaine | « mes succès de la semaine » | Les tâches bouclées, celles qui ont avancé, le total d'actions. |
-| Le samedi | `/light-gtd:revue` | La revue GTD, pas à pas. Claude propose, vous validez : rien n'est modifié sans votre accord. |
+| Le samedi | `/gtd-revue` | La revue GTD, pas à pas. Claude propose, vous validez : rien n'est modifié sans votre accord. |
 
 ## Installation
 
@@ -55,7 +55,7 @@ mode d'emploi, et vos réglages : agenda, contextes, section pro).
 - **Ajouter une marketplace** : `agaches/claude-plugins`, puis ajouter `light-gtd` (les mises à
   jour suivent le repo) ;
 - ou **Importer un plugin** : télécharger
-  [light-gtd.zip](https://github.com/agaches/claude-plugins/releases/download/light-gtd-v0.1.0/light-gtd.zip)
+  [light-gtd.zip](https://github.com/agaches/claude-plugins/releases/download/light-gtd-v0.2.0/light-gtd.zip)
   (aussi sur la page [Releases](https://github.com/agaches/claude-plugins/releases) du repo) et
   l'importer.
 
@@ -75,9 +75,9 @@ Installé ainsi, le plugin reste sur la machine et n'est pas ajouté à votre co
 
 1. Activer les connecteurs **Google Drive**, **Google Sheets** et **Google Agenda**
    (Personnaliser > Connecteurs).
-2. Demander « installe le suivi des tâches » (ou `/light-gtd:installer`). Claude vérifie les
-   connecteurs, demande trois réglages (agenda des tâches, contextes, section pro), crée le
-   fichier `suivi_taches` dans votre Drive et la revue hebdo du samedi 9h dans votre agenda.
+2. Demander « installe le suivi des tâches » (ou `/gtd-install`). Claude vérifie les
+   connecteurs, demande quatre réglages (nom du fichier, agenda des tâches, contextes, section
+   pro), crée le fichier de suivi dans votre Drive et la revue hebdo du samedi 9h dans votre agenda.
 3. Dicter une première tâche : « ajoute : renouveler le passeport avant fin novembre ».
 
 L'installation est relançable sans risque : elle ne recrée jamais ce qui existe et n'efface rien.
@@ -119,7 +119,7 @@ Relancée sur un fichier existant, elle vérifie sa structure et propose les cor
 
 ## La revue du samedi
 
-`/light-gtd:revue` déroule la revue GTD, une étape à la fois : succès de la semaine, tâches en
+`/gtd-revue` déroule la revue GTD, une étape à la fois : succès de la semaine, tâches en
 cours, attentes à relancer, ce qui stagne, deadlines de la semaine suivante, rangement. Vous
 pouvez dire « suivant » pour passer une étape ou « stop » pour arrêter.
 
@@ -131,10 +131,11 @@ Sheets (Fichier > Historique des versions) garde tout le reste.
 ## Vos données
 
 Le plugin ne contient aucune donnée : tout reste dans votre Google Drive et votre Google Agenda.
-Le fichier est retrouvé par son nom, `suivi_taches` : ne pas le renommer. Vos réglages sont dans
+Le fichier est retrouvé par un marqueur écrit dans son onglet README : vous pouvez le renommer
+ou le déplacer, mais pas effacer ce marqueur. Vos réglages sont dans
 le bloc « Configuration » de l'onglet README du fichier ; vous pouvez les modifier à la main.
 
-## Limites (v0.1)
+## Limites (v0.2)
 
 - Pas de tâches planifiées ni d'envoi par mail : le point du matin et les succès se demandent.
 - Un utilisateur, un fichier. L'usage familial est prévu pour une version suivante.
@@ -143,7 +144,7 @@ le bloc « Configuration » de l'onglet README du fichier ; vous pouvez les modi
 
 **App Claude** : dans [Personnaliser > Plugins](https://claude.ai/customize/plugins), ouvrir
 `light-gtd`, puis son menu, puis **Supprimer**. La suppression vaut pour tous vos appareils. Le
-fichier `suivi_taches` et vos événements d'agenda restent en place : à supprimer vous-même si
+fichier de suivi et vos événements d'agenda restent en place : à supprimer vous-même si
 besoin.
 
 **Claude Code** : retirer le plugin, puis, si vous n'utilisez plus aucun plugin de ce catalogue,
