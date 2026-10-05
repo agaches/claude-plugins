@@ -1,0 +1,16 @@
+{
+  "name": "bento-mods",
+  "version": "0.1.0",
+  "description": "Mods Claude Code pour les decks Bento (.bento.html) : garde-fous et audit (bento-guard), panneau de plan du deck (bento-outline).",
+  "author": {
+    "name": "agaches"
+  },
+  "types": "./types/index.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "bento",
+    "slides",
+    "mod",
+    "hooks"
+  ]
+}
