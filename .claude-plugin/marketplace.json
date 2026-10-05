@@ -6,6 +6,12 @@
   "description": "Skills et plugins Claude Code d'agaches",
   "plugins": [
     {
+      "name": "bento-mods",
+      "source": "./plugins/bento-mods",
+      "description": "Mods Claude Code pour les decks Bento (.bento.html) : garde-fous et audit (bento-guard), panneau de plan du deck (bento-outline).",
+      "version": "0.1.0"
+    },
+    {
       "name": "idees-repas",
       "source": "./plugins/idees-repas",
       "description": "Idées de plats et de menus de la semaine tirées d'un répertoire familial (~600 plats), selon la saison, le temps disponible et les présences.",
