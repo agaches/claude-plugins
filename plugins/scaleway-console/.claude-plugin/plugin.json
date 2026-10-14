@@ -1,0 +1,15 @@
+{
+  "name": "scaleway-console",
+  "version": "0.1.0",
+  "description": "Mod Claude Code qui ouvre la console Scaleway dans le navigateur avec ctrl+shift+enter, un bouton ☁ ou /scaleway.",
+  "author": {
+    "name": "agaches"
+  },
+  "license": "MIT",
+  "keywords": [
+    "scaleway",
+    "console",
+    "mod",
+    "keybinding"
+  ]
+}
