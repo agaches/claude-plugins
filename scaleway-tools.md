@@ -1,8 +1,9 @@
-# scaleway-console
+# scaleway-tools
 
 > « Ouvrir la console Scaleway sans lâcher le clavier. »
 
-Plugin Claude Code de la marketplace [agaches/claude-plugins](README.md) : un mod qui ouvre la
+Plugin Claude Code de la marketplace [agaches/claude-plugins](README.md) : des outils Scaleway
+pour Claude Code. Le premier est un mod qui ouvre la
 [console Scaleway](https://console.scaleway.com) dans le navigateur avec **`ctrl+shift+enter`**,
 depuis le prompt de Claude Code.
 
@@ -37,7 +38,7 @@ Il lance `open`, donc macOS.
 
 ```
 claude plugin marketplace add agaches/claude-plugins
-claude plugin install scaleway-console@agaches
+claude plugin install scaleway-tools@agaches
 ```
 
 Puis, dans une session Claude Code, régler le raccourci :
@@ -49,7 +50,7 @@ Puis, dans une session Claude Code, régler le raccourci :
 La commande ajoute les touches dans `~/.claude/keybindings.json`, détecte le terminal et dit
 s'il reste un réglage à faire de son côté. Beaucoup de terminaux envoient `ctrl+shift+enter`
 comme un simple Entrée : iTerm et Tabby demandent un mapping d'une ligne, décrit dans le
-[README du plugin](plugins/scaleway-console/README.md#réglage-du-terminal).
+[README du plugin](plugins/scaleway-tools/README.md#réglage-du-terminal).
 
 ## Limites (v0.1)
 
@@ -62,7 +63,7 @@ comme un simple Entrée : iTerm et Tabby demandent un mapping d'une ligne, décr
 ## Désinstallation
 
 ```
-claude plugin uninstall scaleway-console@agaches
+claude plugin uninstall scaleway-tools@agaches
 ```
 
 Retirer aussi `ctrl+shift+enter` et `meta+d` de `~/.claude/keybindings.json`, et le mapping

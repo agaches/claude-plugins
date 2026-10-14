@@ -24,9 +24,9 @@
       "version": "0.2.0"
     },
     {
-      "name": "scaleway-console",
-      "source": "./plugins/scaleway-console",
-      "description": "Mod Claude Code qui ouvre la console Scaleway dans le navigateur avec ctrl+shift+enter, un bouton ☁ ou /scaleway.",
+      "name": "scaleway-tools",
+      "source": "./plugins/scaleway-tools",
+      "description": "Outils Scaleway pour Claude Code : ctrl+shift+enter (ou ☁, /scaleway) ouvre la console Scaleway dans le navigateur.",
       "version": "0.1.0"
     }
   ]
