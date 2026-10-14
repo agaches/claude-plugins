@@ -3,6 +3,10 @@
 Mod Claude Code : **`ctrl+shift+enter`** ouvre la [console Scaleway](https://console.scaleway.com)
 dans le navigateur, sans quitter le prompt.
 
+Pourquoi ces trois touches : les thèmes ENTER, SHIFT, CTRL
+d'[ai-PULSE 2026](https://www.scaleway.com/en/blog/ai-pulse-2026-themes/)
+(détail dans la [page de présentation](../../scaleway-console.md#pourquoi-ctrlshiftenter)).
+
 ## Usage
 
 | Geste | Effet |
