@@ -9,7 +9,8 @@ depuis le prompt de Claude Code.
 ## Pourquoi `ctrl+shift+enter`
 
 Les trois thèmes d'[ai-PULSE 2026](https://www.scaleway.com/en/blog/ai-pulse-2026-themes/),
-l'événement IA de Scaleway (13 octobre 2026, STATION F), portent le nom de trois touches :
+l'événement IA de Scaleway qui s'est tenu le 13 octobre 2026 à STATION F, portent le nom de
+trois touches :
 **ENTER ⏎. SHIFT ⇧. CTRL ⌃.**
 
 | Touche | Thème ai-PULSE |
@@ -23,11 +24,11 @@ Scaleway.
 
 ## Ce que fait le plugin
 
-| Geste | Effet |
-|---|---|
-| `ctrl+shift+enter` | ouvre la console Scaleway |
-| clic sur ☁ au-dessus du prompt | idem |
-| `/scaleway` | idem |
+| Geste | Effet | Prêt |
+|---|---|---|
+| clic sur ☁ au-dessus du prompt | ouvre la console Scaleway | dès l'installation |
+| `/scaleway` | idem | dès l'installation |
+| `ctrl+shift+enter` | idem | après `/scaleway-setup` |
 
 ## Installation
 
@@ -39,9 +40,16 @@ claude plugin marketplace add agaches/claude-plugins
 claude plugin install scaleway-console@agaches
 ```
 
-Le raccourci `ctrl+shift+enter` demande ensuite un réglage dans `~/.claude/keybindings.json`,
-et dans le terminal si celui-ci ne distingue pas `ctrl+shift+enter` d'Entrée (cas de Tabby) :
-voir [Régler le raccourci](plugins/scaleway-console/README.md#régler-le-raccourci-ctrlshiftenter).
+Puis, dans une session Claude Code, régler le raccourci :
+
+```
+/scaleway-setup
+```
+
+La commande ajoute les touches dans `~/.claude/keybindings.json`, détecte le terminal et dit
+s'il reste un réglage à faire de son côté. Beaucoup de terminaux envoient `ctrl+shift+enter`
+comme un simple Entrée : iTerm et Tabby demandent un mapping d'une ligne, décrit dans le
+[README du plugin](plugins/scaleway-console/README.md#réglage-du-terminal).
 
 ## Limites (v0.1)
 
@@ -57,8 +65,11 @@ voir [Régler le raccourci](plugins/scaleway-console/README.md#régler-le-raccou
 claude plugin uninstall scaleway-console@agaches
 ```
 
-Retirer aussi la ligne ajoutée dans `~/.claude/keybindings.json` (et dans Tabby).
+Retirer aussi `ctrl+shift+enter` et `meta+d` de `~/.claude/keybindings.json`, et le mapping
+ajouté dans le terminal.
 
 ---
+
+Projet indépendant, non affilié à Scaleway.
 
 [github.com/agaches/claude-plugins](https://github.com/agaches/claude-plugins) · Licence MIT

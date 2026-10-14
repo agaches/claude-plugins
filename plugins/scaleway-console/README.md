@@ -9,11 +9,12 @@ d'[ai-PULSE 2026](https://www.scaleway.com/en/blog/ai-pulse-2026-themes/)
 
 ## Usage
 
-| Geste | Effet |
-|---|---|
-| `ctrl+shift+enter` | ouvre la console (après le réglage du raccourci, ci-dessous) |
-| clic sur ☁ au-dessus du prompt | ouvre la console |
-| `/scaleway` | ouvre la console |
+| Geste | Effet | Prêt |
+|---|---|---|
+| clic sur ☁ au-dessus du prompt | ouvre la console | dès l'installation |
+| `/scaleway` | ouvre la console | dès l'installation |
+| `ctrl+shift+enter` | ouvre la console | après `/scaleway-setup` |
+| `/scaleway-setup` | vérifie et règle le raccourci | dès l'installation |
 
 ## Prérequis
 
@@ -27,78 +28,63 @@ d'[ai-PULSE 2026](https://www.scaleway.com/en/blog/ai-pulse-2026-themes/)
 /plugin install scaleway-console@agaches
 ```
 
-## Régler le raccourci `ctrl+shift+enter`
+Puis, dans Claude Code :
 
-Un mod ne reçoit pas les touches directement : le bouton ☁ répond à l'action clavier
-`app:cycleDiffBase`, libre tant que le panneau diff est fermé. Il reste à lier
-`ctrl+shift+enter` à cette action dans `~/.claude/keybindings.json`.
-
-La plupart des terminaux envoient `ctrl+shift+enter` comme un simple Entrée : Claude Code ne
-voit pas la différence. Deux cas.
-
-### Terminal qui distingue `ctrl+shift+enter` (protocole clavier kitty : kitty, Ghostty, WezTerm…)
-
-`~/.claude/keybindings.json` :
-
-```json
-{
-  "$schema": "https://www.schemastore.org/claude-code-keybindings.json",
-  "bindings": [
-    {
-      "context": "Global",
-      "bindings": { "ctrl+shift+enter": "app:cycleDiffBase" }
-    }
-  ]
-}
+```
+/scaleway-setup
 ```
 
-Non testé : seule la configuration Tabby ci-dessous l'a été.
+Tant que le raccourci n'est pas réglé, un toast le rappelle au démarrage de la session.
 
-### Tabby (testé sur macOS, Tabby 1.0.235)
+## Ce que fait `/scaleway-setup`
 
-Tabby ne transmet pas `ctrl+shift+enter`. On lui fait envoyer `meta+d` à la place, via son
-action « Delete next word » (qui envoie `\x1bd` sur macOS).
+Un mod ne reçoit pas les touches directement : le bouton ☁ répond à l'action clavier
+`app:cycleDiffBase`, libre tant que le panneau diff est fermé. `/scaleway-setup` :
 
-1. Tabby › Settings › Hotkeys › **Delete next word** : ajouter `Ctrl-Shift-Enter`.
-   Ou dans `~/Library/Application Support/tabby/config.yaml` :
-   ```yaml
-   hotkeys:
-     delete-next-word:
-       - ⌥-Delete
-       - Ctrl-Shift-Enter
-   ```
-2. `~/.claude/keybindings.json` :
-   ```json
-   {
-     "$schema": "https://www.schemastore.org/claude-code-keybindings.json",
-     "bindings": [
-       {
-         "context": "Global",
-         "bindings": { "meta+d": "app:cycleDiffBase" }
-       }
-     ]
-   }
-   ```
-3. Redémarrer Tabby.
+1. **Claude Code** : ajoute dans `~/.claude/keybindings.json`, contexte `Global`,
+   `ctrl+shift+enter` et `meta+d` → `app:cycleDiffBase`. Le reste du fichier est conservé ;
+   une touche déjà liée à autre chose est signalée et laissée telle quelle.
+2. **Terminal** (détecté par `TERM_PROGRAM`) : vérifie qu'il transmet la combinaison, et sinon
+   donne l'étape à faire à la main (le mod n'écrit pas la config du terminal).
 
-Effets de bord : dans Claude Code, `⌥-Delete` ouvre aussi la console ; dans un shell,
-`ctrl+shift+enter` supprime le mot suivant.
+Exemple de sortie :
 
-### Si le raccourci ne fait rien
+```
+✓ keybindings.json : ajouté ctrl+shift+enter, meta+d → app:cycleDiffBase
+✗ iTerm : iTerm › Settings › Profiles › Keys › Key Mappings › + : raccourci ctrl+shift+enter, action « Send Escape Sequence », Esc+ d.
 
-| Test | Résultat | Cause |
+Reste à faire : les lignes ✗ ci-dessus, puis relancer /scaleway-setup.
+```
+
+## Réglage du terminal
+
+Beaucoup de terminaux envoient `ctrl+shift+enter` comme un simple Entrée : Claude Code ne voit
+pas la différence. On fait alors envoyer `meta+d` (Esc+d) au terminal pour cette combinaison.
+
+| Terminal | Réglage | Testé |
 |---|---|---|
-| clic sur ☁ | rien | mod non chargé (`/plugin`) |
-| `⌥-Delete` (Tabby) | ouvre la console | Tabby n'a pas relu sa config : le redémarrer |
-| `⌥-Delete` (Tabby) | rien | `keybindings.json` non pris en compte : redémarrer Claude Code |
+| iTerm 3.7 | Settings › Profiles › Keys › Key Mappings › **+** : raccourci `ctrl+shift+enter`, action **Send Escape Sequence**, Esc+ `d` | oui |
+| Tabby 1.0 | Settings › Hotkeys › **Delete next word** : ajouter `Ctrl-Shift-Enter` (cette action envoie Esc+d), puis redémarrer Tabby | oui |
+| autre | s'il transmet `ctrl+shift+enter` (protocole clavier kitty), rien à faire ; sinon lui faire envoyer Esc+d. Si le terminal a déjà un raccourci sur cette combinaison, le libérer. | non |
 
-Panneau diff ouvert : `ctrl+shift+enter` y change la base de comparaison au lieu d'ouvrir
-la console.
+Tabby, à la main dans `~/Library/Application Support/tabby/config.yaml` :
 
-## Exemple
+```yaml
+hotkeys:
+  delete-next-word:
+    - ⌥-Delete
+    - Ctrl-Shift-Enter
+```
 
-En pleine session, `ctrl+shift+enter` : l'onglet `console.scaleway.com` s'ouvre dans le
-navigateur par défaut.
+Effets de bord : dans un shell, `ctrl+shift+enter` agit comme `meta+d` (supprime le mot
+suivant) ; avec Tabby, `⌥-Delete` ouvre aussi la console dans Claude Code ; panneau diff
+ouvert, `ctrl+shift+enter` y change la base de comparaison au lieu d'ouvrir la console.
+
+## Si le raccourci ne fait rien
+
+1. Clic sur ☁ sans effet : le mod n'est pas chargé (`/plugin`, puis `/reload-plugins`).
+2. ☁ marche, pas le raccourci : relancer `/scaleway-setup` et traiter les lignes ✗.
+3. Tout est ✓ : redémarrer le terminal, puis Claude Code (relecture de `keybindings.json`).
 
 ## Développement
 
@@ -106,3 +92,7 @@ navigateur par défaut.
 claude plugin validate plugins/scaleway-console
 claude plugin test plugins/scaleway-console
 ```
+
+---
+
+Projet indépendant, non affilié à Scaleway.
