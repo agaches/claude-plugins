@@ -1,11 +1,28 @@
 # scaleway-tools
 
-> « Ouvrir la console Scaleway sans lâcher le clavier. »
+> « Combien m'a coûté le lab aujourd'hui ? »
 
 Plugin Claude Code de la marketplace [agaches/claude-plugins](README.md) : des outils Scaleway
-pour Claude Code. Le premier est un mod qui ouvre la
-[console Scaleway](https://console.scaleway.com) dans le navigateur avec **`ctrl+shift+enter`**,
-depuis le prompt de Claude Code.
+dans Claude Code, sans quitter le prompt.
+
+Quand on construit une infra Scaleway avec Claude, deux gestes reviennent sans cesse : ouvrir la
+console pour vérifier ce qui a été créé, et regarder la facture pour savoir ce que coûte ce qui
+tourne. Les deux font sortir du terminal, et le second se fait rarement : on découvre le coût
+d'une ressource oubliée en fin de mois.
+
+scaleway-tools ramène les deux dans Claude Code. La console s'ouvre en trois touches. La
+dépense du jour et du mois s'affiche dans un panneau et dans la barre d'état, relue toutes les
+heures.
+
+## Ce que fait le plugin
+
+| Outil | Rôle |
+|---|---|
+| **Console** | `ctrl+shift+enter`, le bouton ☁ au-dessus du prompt ou `/scaleway` ouvrent la [console Scaleway](https://console.scaleway.com) dans le navigateur. |
+| **FinOps** | Panneau latéral : dépense du jour et du mois à date, jauge du budget, trois derniers mois par projet, répartition du mois et premiers postes. `/finops` l'ouvre et le rafraîchit. |
+
+Le détail (réglage du terminal, options, calcul de la dépense du jour) est dans le
+[README du plugin](plugins/scaleway-tools/README.md).
 
 ## Pourquoi `ctrl+shift+enter`
 
@@ -23,48 +40,84 @@ trois touches :
 Le mod prend la formule au pied de la lettre : les trois touches ensemble ouvrent la console
 Scaleway.
 
-## Ce que fait le plugin
-
-| Geste | Effet | Prêt |
-|---|---|---|
-| clic sur ☁ au-dessus du prompt | ouvre la console Scaleway | dès l'installation |
-| `/scaleway` | idem | dès l'installation |
-| `ctrl+shift+enter` | idem | après `/scaleway-setup` |
-| `/finops` | panneau FinOps : dépense du jour, du mois, budget, par projet | `scw` configurée |
-
 ## Installation
 
-Le mod est un function hook de **Claude Code** : il ne fonctionne pas dans le chat claude.ai.
-Il lance `open`, donc macOS.
+Les outils sont des mods (function hooks) de **Claude Code** : ils ne fonctionnent pas dans le
+chat claude.ai. Prérequis du FinOps : la [CLI `scw`](https://github.com/scaleway/scaleway-cli)
+avec une clé qui lit la facturation, et [`direnv`](https://direnv.net) si cette clé vit dans le
+`.envrc` d'un repo.
+
+Dans une session Claude Code :
 
 ```
-claude plugin marketplace add agaches/claude-plugins
-claude plugin install scaleway-tools@agaches
+/plugin marketplace add agaches/claude-plugins
+/plugin install scaleway-tools@agaches
 ```
 
-Puis, dans une session Claude Code, régler le raccourci :
+L'installation demande les trois réglages du FinOps. Tous sont facultatifs :
+
+| Réglage | Exemple | Effet | Laissé vide |
+|---|---|---|---|
+| Dossier direnv | `~/infra/orga` | `scw` lancé par `direnv exec` dans ce dossier, FinOps actif seulement là, panneau ouvert au démarrage | profil `scw` par défaut, FinOps actif partout, panneau ouvert par `/finops` |
+| ID d'organisation | `11111111-2222-…` | organisation dont on lit la facturation | celle du profil `scw` |
+| Projets (couleurs) | `prod,staging,outillage` | une couleur fixe par projet, dans cet ordre (6 au plus) | une seule couleur |
+
+Pour les changer ensuite : `/config`, section du plugin.
+
+## Premier lancement
+
+1. Régler le raccourci : `/scaleway-setup`. La commande ajoute les touches dans
+   `~/.claude/keybindings.json`, détecte le terminal et dit s'il reste un réglage à faire de
+   son côté (iTerm et Tabby demandent un mapping d'une ligne, décrit dans le
+   [README du plugin](plugins/scaleway-tools/README.md#réglage-du-terminal)). Tant que ce n'est
+   pas fait, un toast le rappelle au démarrage.
+2. Ouvrir Claude Code dans le dossier direnv configuré (ou n'importe où, sans dossier) :
+   `/finops` ouvre le panneau. La barre d'état affiche par exemple
+   `FinOps : 1,24 € aujourd'hui · 21,42 € en oct.`.
+3. `ctrl+shift+enter` : la console Scaleway s'ouvre dans le navigateur.
+
+## Exemple
+
+*Panneau illustratif, chiffres fictifs.*
 
 ```
-/scaleway-setup
+FinOps · Scaleway                         09:12 UTC
+
+╭─────────────╮  ╭──────────────────╮
+│ Aujourd'hui │  │ oct. à date      │
+│ 1,24 €      │  │ 21,42 €          │
+│ depuis 00:00│  │ sept. : 18,03 €  │
+╰─────────────╯  ╰──────────────────╯
+
+Budget 30,00 €                      ✓ ok 71 %
+█████████████████████░░░░░░░░░
+
+Trois derniers mois
+août   ███████████          14,60 €
+sept.  █████████████        18,03 €
+oct.   ███████████████      21,42 € en cours
+■ prod  ■ staging  ■ outillage
+
+oct. par projet
+prod        █████████████   13,14 €
+staging     █████▋           5,66 €
+outillage   ██▌              2,62 €
 ```
 
-La commande ajoute les touches dans `~/.claude/keybindings.json`, détecte le terminal et dit
-s'il reste un réglage à faire de son côté. Beaucoup de terminaux envoient `ctrl+shift+enter`
-comme un simple Entrée : iTerm et Tabby demandent un mapping d'une ligne, décrit dans le
-[README du plugin](plugins/scaleway-tools/README.md#réglage-du-terminal).
+## Vos données
 
-## FinOps
-
-Le panneau lit la facturation avec la CLI `scw` (toutes les heures) et la dessine dans Claude
-Code : ce que coûte le lab aujourd'hui, ce mois-ci, par rapport au budget. Si la clé qui lit la
-facturation vit dans le `.envrc` d'un repo, l'option `repertoire_direnv` le limite à ce repo.
-Options et détail : [README du plugin](plugins/scaleway-tools/README.md#finops).
+Le FinOps lit la facturation avec la clé de `scw` (ou celle du `.envrc` du dossier direnv) et
+n'envoie les montants nulle part : ils restent dans Claude Code. Il garde le dernier relevé et
+la base du jour dans le store du plugin (`~/.claude/plugins/store/`), pour calculer la dépense
+du jour. Le plugin ne contient aucun identifiant ni aucune clé.
 
 ## Limites (v0.1)
 
-- Console : macOS seulement (`open`).
+- Console : le mod lance `open`, donc macOS.
 - Le raccourci réutilise l'action `app:cycleDiffBase` : panneau diff ouvert, il change la base
   du diff au lieu d'ouvrir la console.
+- FinOps : la dépense du jour part du dernier relevé de la veille. Sans session ouverte la
+  veille, elle part du premier relevé du jour (« depuis 09:12 »).
 - Les mods de Claude Code sont en accès anticipé : leur API peut changer d'une version à
   l'autre.
 

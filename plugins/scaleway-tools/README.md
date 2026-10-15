@@ -32,6 +32,7 @@ d'[ai-PULSE 2026](https://www.scaleway.com/en/blog/ai-pulse-2026-themes/)
 /plugin install scaleway-tools@agaches
 ```
 
+L'installation demande les réglages du FinOps ([Options](#options)), tous facultatifs.
 Puis, dans Claude Code :
 
 ```
