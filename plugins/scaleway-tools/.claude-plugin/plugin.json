@@ -1,7 +1,7 @@
 {
   "name": "scaleway-tools",
   "version": "0.1.0",
-  "description": "Outils Scaleway pour Claude Code : ctrl+shift+enter (ou ☁, /scaleway) ouvre la console Scaleway dans le navigateur.",
+  "description": "Outils Scaleway pour Claude Code : ctrl+shift+enter (ou ☁, /scaleway) ouvre la console Scaleway ; panneau FinOps (/finops) avec la dépense du jour, du mois, le budget et la répartition par projet.",
   "author": {
     "name": "agaches"
   },
@@ -10,6 +10,29 @@
     "scaleway",
     "console",
     "mod",
-    "keybinding"
-  ]
+    "keybinding",
+    "finops",
+    "billing"
+  ],
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "repertoire_direnv": {
+      "type": "string",
+      "title": "Dossier direnv",
+      "description": "Dossier dont le .envrc porte la clé qui lit la facturation (scw lancé via direnv exec). Le FinOps n'est alors actif que dans ce dossier. Vide : profil scw par défaut, actif partout.",
+      "default": ""
+    },
+    "organisation_id": {
+      "type": "string",
+      "title": "ID d'organisation",
+      "description": "organization-id passé à scw billing. Vide : celle du profil scw.",
+      "default": ""
+    },
+    "projets": {
+      "type": "string",
+      "title": "Projets (couleurs)",
+      "description": "Noms de projets séparés par des virgules, dans l'ordre des couleurs du panneau (6 au plus). Les autres partagent une 7e couleur.",
+      "default": ""
+    }
+  }
 }

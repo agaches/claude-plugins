@@ -9,6 +9,7 @@ import {
   mergeKeybindings,
   tabbyHasHotkey,
 } from './setup'
+import { demarrerFinops, registerFinops } from './finops'
 
 const URL = 'https://console.scaleway.com'
 
@@ -77,7 +78,9 @@ async function checkSetup($: EngineInterface, write: boolean) {
   return { isReady: isClaudeOk && isTerminalOk !== false, lines }
 }
 
-export const register: Register = on => {
+export const register: Register = (on, options) => {
+  registerFinops(on, options)
+
   on('session.start', async ($, e, next) => {
     await $.command.register({ name: 'scaleway', description: 'Ouvre la console Scaleway' })
     await $.command.register({
@@ -87,7 +90,9 @@ export const register: Register = on => {
     const { isReady } = await checkSetup($, false)
     if (!isReady) $.ui.toast('Scaleway : ctrl+shift+enter pas encore réglé, lancer /scaleway-setup')
 
-    return next(e)
+    const res = await next(e)
+    await demarrerFinops($, options)
+    return res
   })
 
   on('command.run', { command: 'scaleway' }, async $ => {

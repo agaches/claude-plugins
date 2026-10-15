@@ -30,6 +30,7 @@ Scaleway.
 | clic sur ☁ au-dessus du prompt | ouvre la console Scaleway | dès l'installation |
 | `/scaleway` | idem | dès l'installation |
 | `ctrl+shift+enter` | idem | après `/scaleway-setup` |
+| `/finops` | panneau FinOps : dépense du jour, du mois, budget, par projet | `scw` configurée |
 
 ## Installation
 
@@ -52,9 +53,16 @@ s'il reste un réglage à faire de son côté. Beaucoup de terminaux envoient `c
 comme un simple Entrée : iTerm et Tabby demandent un mapping d'une ligne, décrit dans le
 [README du plugin](plugins/scaleway-tools/README.md#réglage-du-terminal).
 
+## FinOps
+
+Le panneau lit la facturation avec la CLI `scw` (toutes les heures) et la dessine dans Claude
+Code : ce que coûte le lab aujourd'hui, ce mois-ci, par rapport au budget. Si la clé qui lit la
+facturation vit dans le `.envrc` d'un repo, l'option `repertoire_direnv` le limite à ce repo.
+Options et détail : [README du plugin](plugins/scaleway-tools/README.md#finops).
+
 ## Limites (v0.1)
 
-- macOS seulement (`open`).
+- Console : macOS seulement (`open`).
 - Le raccourci réutilise l'action `app:cycleDiffBase` : panneau diff ouvert, il change la base
   du diff au lieu d'ouvrir la console.
 - Les mods de Claude Code sont en accès anticipé : leur API peut changer d'une version à

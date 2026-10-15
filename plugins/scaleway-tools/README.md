@@ -90,12 +90,46 @@ ouvert, `ctrl+shift+enter` y change la base de comparaison au lieu d'ouvrir la c
 2. ☁ marche, pas le raccourci : relancer `/scaleway-setup` et traiter les lignes ✗.
 3. Tout est ✓ : redémarrer le terminal, puis Claude Code (relecture de `keybindings.json`).
 
+## FinOps
+
+Panneau **FinOps Scaleway** : dépense du jour et du mois à date, jauge du budget, trois derniers
+mois empilés par projet, répartition du mois par projet et cinq premiers postes. Rafraîchi
+toutes les heures ; `/finops` l'ouvre et le rafraîchit. La barre d'état affiche
+`FinOps : x € aujourd'hui · y € en <mois>`.
+
+### Prérequis
+
+- [CLI `scw`](https://github.com/scaleway/scaleway-cli) configurée avec une clé qui lit la
+  facturation (`billing consumption list`, `billing budget list`).
+- [`direnv`](https://direnv.net) si la clé vit dans un `.envrc` (option `repertoire_direnv`).
+
+### Options
+
+Réglées à l'installation, ou ensuite dans `/config` :
+
+| Option | Effet | Vide |
+|---|---|---|
+| `repertoire_direnv` | `scw` lancé par `direnv exec <dossier>` ; FinOps actif seulement dans ce dossier, panneau ouvert au démarrage | profil `scw` par défaut, actif partout, panneau ouvert par `/finops` |
+| `organisation_id` | `organization-id=` passé à `scw billing` | organisation du profil |
+| `projets` | noms de projets séparés par des virgules : fixe leur couleur (6 au plus) | une seule couleur pour tous |
+
+Exemple : `repertoire_direnv` = `~/infra/orga`, `projets` = `prod,staging,outillage`.
+
+### Ce qu'il garde
+
+Le dernier relevé et la base du jour, dans le store du plugin (`~/.claude/plugins/store/`) :
+la dépense du jour est le total du mois moins le dernier relevé de la veille. Sans relevé de la
+veille, elle part du premier relevé du jour (« depuis HH:MM »).
+
 ## Développement
 
 ```
 claude plugin validate plugins/scaleway-tools
 claude plugin test plugins/scaleway-tools
 ```
+
+Un module de hooks n'a qu'un `session.start` : celui de `hooks/register.tsx` appelle
+`demarrerFinops` (`hooks/finops.tsx`).
 
 ---
 

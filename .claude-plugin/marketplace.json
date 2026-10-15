@@ -26,7 +26,7 @@
     {
       "name": "scaleway-tools",
       "source": "./plugins/scaleway-tools",
-      "description": "Outils Scaleway pour Claude Code : ctrl+shift+enter (ou ☁, /scaleway) ouvre la console Scaleway dans le navigateur.",
+      "description": "Outils Scaleway pour Claude Code : ctrl+shift+enter (ou ☁, /scaleway) ouvre la console Scaleway ; panneau FinOps (/finops) avec la dépense du jour, du mois, le budget et la répartition par projet.",
       "version": "0.1.0"
     }
   ]
