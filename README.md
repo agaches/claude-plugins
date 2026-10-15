@@ -18,6 +18,7 @@ Mise à jour du catalogue : `/plugin marketplace update agaches`
 | [bento-mods](plugins/bento-mods) | Mods pour les decks Bento : garde-fous, audit du `#bento-doc`, panneau de plan du deck · [présentation](bento-mods.md) |
 | [idees-repas](plugins/idees-repas) | Idées de plats et menus de la semaine, selon la saison et les présences · [présentation](idees-repas.md) |
 | [light-gtd](plugins/light-gtd) | Gestion des tâches GTD dans un Google Sheets : dictée, point du matin, succès, revue hebdo · [présentation](light-gtd.md) |
+| [scaleway-tools](plugins/scaleway-tools) | Outils Scaleway : `ctrl+shift+enter` ouvre la console Scaleway depuis Claude Code, panneau FinOps de la dépense du jour et du mois · [présentation](scaleway-tools.md) |
 
 ## Ajouter un plugin
 

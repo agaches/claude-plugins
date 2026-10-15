@@ -22,6 +22,12 @@
       "source": "./plugins/light-gtd",
       "description": "Gestion des tâches façon GTD dans un Google Sheets tenu par Claude : capture par dictée, une ligne par sujet, une colonne par jour, point du matin, succès du jour et de la semaine, revue hebdo.",
       "version": "0.2.0"
+    },
+    {
+      "name": "scaleway-tools",
+      "source": "./plugins/scaleway-tools",
+      "description": "Outils Scaleway pour Claude Code : ctrl+shift+enter (ou ☁, /scaleway) ouvre la console Scaleway ; panneau FinOps (/finops) avec la dépense du jour, du mois, le budget et la répartition par projet.",
+      "version": "0.1.0"
     }
   ]
 }
