@@ -23,7 +23,9 @@ d'[ai-PULSE 2026](https://www.scaleway.com/en/blog/ai-pulse-2026-themes/)
 ### Prérequis
 
 - Claude Code avec le support des mods (function hooks, accès anticipé).
-- macOS : le mod lance `open https://console.scaleway.com`.
+- Pour ouvrir le navigateur, le mod essaie dans l'ordre : `$BROWSER` s'il est défini, puis
+  selon le système `open` ou `xdg-open` (macOS, Linux), `wslview` ou `explorer.exe` (WSL),
+  `cmd /c start` (Windows). Si aucun ne marche, un toast donne l'URL.
 
 ### Installation
 

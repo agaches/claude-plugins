@@ -63,7 +63,7 @@ export function mergeKeybindings(text: string | undefined, keys: string[]): Merg
 // config.yaml de Tabby : Ctrl-Shift-Enter dans la liste du hotkey delete-next-word.
 export function tabbyHasHotkey(yaml: string): boolean {
   const list = /^ {2}delete-next-word:\n((?: {4}- .*\n?)*)/m.exec(yaml)
-  return list !== null && /- Ctrl-Shift-Enter\s*$/m.test(list[1])
+  return list !== null && /- Ctrl-Shift-Enter\s*$/m.test(list[1] ?? '')
 }
 
 // Préférences iTerm (defaults export, XML) : ctrl+shift+enter (0xd-0x60000) qui envoie Esc+d.

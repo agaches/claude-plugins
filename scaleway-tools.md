@@ -113,7 +113,8 @@ du jour. Le plugin ne contient aucun identifiant ni aucune clé.
 
 ## Limites (v0.1)
 
-- Console : le mod lance `open`, donc macOS.
+- Console : testée à la main sous macOS. Sous Linux, WSL et Windows, les commandes lancées
+  (`xdg-open`, `wslview`, `explorer.exe`, `cmd /c start`) ne sont vérifiées que par les tests.
 - Le raccourci réutilise l'action `app:cycleDiffBase` : panneau diff ouvert, il change la base
   du diff au lieu d'ouvrir la console.
 - FinOps : la dépense du jour part du dernier relevé de la veille. Sans session ouverte la

@@ -9,18 +9,29 @@ import {
   mergeKeybindings,
   tabbyHasHotkey,
 } from './setup'
+import { browserCommands } from './browser'
 import { demarrerFinops, registerFinops } from './finops'
 
 const URL = 'https://console.scaleway.com'
 
+// Essaie chaque commande du système jusqu'à la première qui répond 0.
 async function openConsole($: EngineInterface): Promise<boolean> {
-  try {
-    const { exitCode, stderr } = await $.process.run(['open', URL])
-    if (exitCode === 0) return true
-    $.ui.toast(`Scaleway : échec de open (${stderr.trim()})`)
-  } catch {
-    $.ui.toast('Scaleway : commande open introuvable (macOS seulement)')
+  const env = {
+    browser: await $.env.get('BROWSER'),
+    os: await $.env.get('OS'),
+    wslDistro: await $.env.get('WSL_DISTRO_NAME'),
   }
+  const errors: string[] = []
+  for (const argv of browserCommands(env, URL)) {
+    try {
+      const { exitCode, stderr } = await $.process.run(argv)
+      if (exitCode === 0) return true
+      errors.push(`${argv[0]} : ${stderr.trim() || `code ${exitCode}`}`)
+    } catch {
+      errors.push(`${argv[0]} : introuvable`)
+    }
+  }
+  $.ui.toast(`Scaleway : navigateur non ouvert (${errors.join(' ; ')}), ouvrir ${URL}`)
 
   return false
 }
