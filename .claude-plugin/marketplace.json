@@ -24,6 +24,12 @@
       "version": "0.2.0"
     },
     {
+      "name": "premiers-pas",
+      "source": "./plugins/premiers-pas",
+      "description": "Premiers pas avec Claude sur un compte Team : un prompt à coller guide le réglage de claude.ai (paramètres, connecteurs), puis une skill guide l'installation des apps utiles et propose un programme de formation.",
+      "version": "0.1.0"
+    },
+    {
       "name": "scaleway-tools",
       "source": "./plugins/scaleway-tools",
       "description": "Outils Scaleway pour Claude Code : ctrl+shift+enter (ou ☁, /scaleway) ouvre la console Scaleway ; panneau FinOps (/finops) avec la dépense du jour, du mois, le budget et la répartition par projet.",
