@@ -39,7 +39,8 @@ Déroulé :
    b. Préférences de profil : un texte que tu liras dans toutes mes conversations. Propose de m'aider à le rédiger en 2-3 questions (mon rôle, la langue, mes exigences, par ex. « source tes affirmations »).
    c. Recherche web, puis Research (recherche approfondie, qui s'active par conversation).
    d. Mémoire (Settings > « Your Claude » ou « Memory ») : retrouver mes conversations passées, garder du contexte d'une conversation à l'autre.
-   e. App mobile et vocal : poser mes questions à la voix depuis le téléphone (l'installation se fera plus tard, cite-la seulement).
+   e. Usage (Settings > Usage, libellé approximatif) : où voir ma consommation et mes limites. Rien à régler, juste savoir où regarder.
+   f. App mobile et vocal : poser mes questions à la voix depuis le téléphone (l'installation se fera plus tard, cite-la seulement).
    Cite les autres réglages (styles, apparence…) en une ligne, sans détailler.
 
 2. Connecteurs : demande-moi mon environnement de travail (Microsoft 365, Google Workspace, Slack, autre) et présente seulement les connecteurs correspondants (Microsoft 365 : connecteur Microsoft 365 ; Google Workspace : Gmail, Google Drive, Google Agenda ; Slack : Slack ; autre : ceux de la liste affichée). Précise que les connecteurs activés ici sont aussi disponibles dans Claude Code, Cowork et l'app de bureau. Si verrouillé : demander à l'admin d'autoriser le connecteur.
@@ -83,7 +84,8 @@ Claude Code :
 
 ## Limites (v0.1)
 
-- Comptes Team uniquement.
+- Comptes Team uniquement : la configuration d'un compte Pro/Max est très différente, le guide
+  ne s'y applique pas.
 - Plusieurs libellés de menus de claude.ai ne sont pas encore relevés : le guide décrit les
   réglages par leur fonction et vous demande ce que vous voyez.
 - Les formations de Claude Academy sont en anglais.

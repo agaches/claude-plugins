@@ -27,7 +27,7 @@
       "name": "premiers-pas",
       "source": "./plugins/premiers-pas",
       "description": "Premiers pas avec Claude sur un compte Team : un prompt à coller guide le réglage de claude.ai (paramètres, connecteurs), puis une skill guide l'installation des apps utiles et propose un programme de formation.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "name": "scaleway-tools",

@@ -6,6 +6,9 @@ Source unique des liens et des libellés de menus. Un libellé marqué `à relev
 n'est pas confirmé par la doc : décrire le réglage par sa fonction et demander à
 l'utilisateur ce qu'il voit, ne jamais inventer de libellé.
 
+**Comptes Team uniquement.** La configuration d'un compte Team n'a rien à voir avec celle d'un
+compte Pro/Max : ne pas transposer ces chemins ni ces réglages à une offre individuelle.
+
 Vérifier les liens : `python3 scripts/verifier_liens.py <ce fichier>` (depuis la racine du repo).
 
 ## Réglages claude.ai
@@ -19,6 +22,7 @@ Cible : compte Team. L'utilisateur choisit chaque valeur ; la skill explique.
 | Recherche web | à relever dans l'UI | à relever dans l'UI | Claude cherche sur le web et cite ses sources | activé / désactivé | oui (outil de recherche présent) |
 | Research (recherche approfondie) | à relever dans l'UI | à relever dans l'UI | Recherche longue, plusieurs sources, rapport sourcé ; s'active par conversation | activé / désactivé, par conversation | incertain |
 | Mémoire | Paramètres > à relever dans l'UI | Settings > « Your Claude » (ancienne interface : Settings > Memory) : « Search and reference chats », « Generate memory from chats » | Retrouver les conversations passées, garder du contexte d'une conversation à l'autre. Désactivable pour une conversation (menu « + ») ; mode incognito (icône fantôme) | chaque bascule activée / désactivée | en partie (outils de recherche dans l'historique) |
+| Usage | à relever dans l'UI | à relever dans l'UI (Settings > Usage, libellé approximatif) | Voir sa consommation et où on en est de ses limites, pour savoir quand on approche du plafond | consultation seulement | non (capture ou déclaration) |
 | Vocal et app mobile | à relever dans l'UI | à relever dans l'UI | Poser ses questions à la voix depuis le téléphone | app installée ou non | non (capture ou déclaration) |
 
 Autres réglages (citer en une ligne, ne pas détailler) : styles, langue de l'interface,
