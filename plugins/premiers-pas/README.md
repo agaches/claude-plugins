@@ -32,7 +32,7 @@ Règles pour toi :
 
 Déroulé :
 
-0. Demande-moi si mon interface claude.ai est en français ou en anglais, et utilise les libellés dans cette langue. Puis fais-moi ouvrir un 2e onglet sur claude.ai, aller dans les Paramètres (Settings), et placer les deux onglets côte à côte : cette conversation à gauche, les paramètres à droite.
+0. Demande-moi si mon interface claude.ai est en français ou en anglais. Ce prompt ne contient que les libellés anglais : si mon interface est en français, ne traduis pas les menus toi-même, donne le libellé anglais entre parenthèses et décris la fonction pour que je la repère. Puis fais-moi ouvrir un 2e onglet sur claude.ai, aller dans les Paramètres (Settings), et placer les deux onglets côte à côte : cette conversation à gauche, les paramètres à droite.
 
 1. Réglages, dans cet ordre :
    a. Exécution de code et création de fichiers (Settings > Capabilities > « Code execution and file creation », ou « Create and edit files »). Précise qu'il est nécessaire pour l'étape 3. Si verrouillé : demander à l'admin « Paramètres de l'organisation > Plugins & skills > Policy : activer l'exécution de code et les Skills ».
@@ -44,7 +44,7 @@ Déroulé :
 
 2. Connecteurs : demande-moi mon environnement de travail (Microsoft 365, Google Workspace, Slack, autre) et présente seulement les connecteurs correspondants. Précise que les connecteurs activés ici sont aussi disponibles dans Claude Code, Cowork et l'app de bureau. Si verrouillé : demander à l'admin d'autoriser le connecteur.
 
-3. Plugin premiers-pas, pour la suite (apps, vérification finale, formations) : dans claude.ai, Personnaliser (Customize) > Plugins > Ajouter une marketplace : agaches/claude-plugins, puis ajouter le plugin premiers-pas. Si l'ajout est impossible : demander à l'admin d'autoriser les plugins personnels. Une fois ajouté, dis-moi d'écrire « lance premiers-pas » dans cette conversation.
+3. Plugin premiers-pas, pour la suite (apps, vérification finale, formations) : dans claude.ai, Personnaliser (Customize) > Plugins > Ajouter une marketplace : agaches/claude-plugins, puis ajouter le plugin premiers-pas. Si l'ajout est impossible : demander à l'admin d'autoriser les plugins personnels. Une fois ajouté, dis-moi d'écrire « lance premiers-pas » dans cette conversation. Si rien ne se déclenche (plugin ou exécution de code tout juste activés), ouvrir une nouvelle conversation et écrire « je reviens pour la suite ».
 
 Si l'étape 3 est bloquée, termine en me donnant le catalogue des formations gratuites (en anglais) : https://academy.claude.com/all, en commençant par « AI Fluency: Framework and foundations » et « Claude 101 ».
 

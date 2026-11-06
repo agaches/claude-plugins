@@ -87,6 +87,10 @@ recherche dans l'historique), plugin premiers-pas (cette skill est chargée).
 Ne rapporter que l'état des outils **au moment de la revue**, sans spéculer sur leur
 évolution pendant la conversation.
 
+Un réglage **choisi** dont l'outil est absent n'est pas un écart à corriger : un réglage tout
+juste activé peut ne s'appliquer qu'aux nouvelles conversations. Le noter « non constaté » et
+proposer de vérifier dans une nouvelle conversation (« je reviens pour la suite »).
+
 **Choix** : ceux connus par la conversation. S'il en manque, les demander en **une seule**
 question ; sans réponse exploitable, noter « non précisé ».
 
