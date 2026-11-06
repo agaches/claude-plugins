@@ -7,7 +7,7 @@ description: Guide la suite des premiers pas avec Claude sur un compte Team, apr
 
 Prend le relais du prompt d'amorçage (README du plugin) une fois claude.ai réglé. Liens,
 libellés de menus et formations : **toujours** depuis `references/reference.md`, jamais de
-mémoire. Un libellé marqué `à relever dans l'UI` : décrire le réglage par sa fonction et
+mémoire. Ne présenter comme libellé exact que ceux écrits dans ce fichier. Un libellé marqué `à relever dans l'UI` : décrire le réglage par sa fonction et
 demander à l'utilisateur ce qu'il voit.
 
 ## Règles
@@ -69,7 +69,7 @@ Particularités :
 
 - App mobile : rappeler le vocal pour poser ses questions depuis le téléphone.
 - Office : un complément à la fois, seulement ceux retenus. Mentionner que le réglage « Let
-  Claude work across files » est désactivé par défaut sur Team, **sans dire qui l'active** (non
+  Claude work across files » (libellé anglais confirmé par la doc) est désactivé par défaut sur Team, **sans dire qui l'active** (non
   précisé dans `references/reference.md`).
 - Claude Code : lien de doc et chapitre 4 du programme seulement. **Ne pas** guider sa
   configuration : c'est hors du périmètre de ce plugin.
@@ -81,8 +81,10 @@ n'est pas un écart.
 
 **Ce que tu détectes toi-même**, sans rien demander (colonne « Détectable par Claude ») :
 exécution de code (outil d'exécution présent), recherche web (outil de recherche présent),
-connecteurs (leurs outils), préférences de profil (texte dans ton contexte), mémoire (outils de
-recherche dans l'historique), plugin premiers-pas (cette skill est chargée).
+connecteurs (leurs outils), préférences de profil (texte dans ton contexte), mémoire **en
+partie** (seulement la recherche dans l'historique, par ses outils ; la génération de mémoire
+n'est pas détectable : capture ou parole de l'utilisateur), plugin premiers-pas (cette skill est
+chargée).
 
 Ne rapporter que l'état des outils **au moment de la revue**, sans spéculer sur leur
 évolution pendant la conversation.

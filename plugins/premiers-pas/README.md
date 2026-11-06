@@ -26,7 +26,7 @@ Je débute avec Claude (compte Team). Guide-moi pour régler claude.ai, étape p
 Règles pour toi :
 - Une étape à la fois. Attends ma réponse avant de passer à la suite.
 - Pour chaque réglage : explique en 1-2 phrases à quoi il sert, les valeurs possibles et ce que ça change. Puis laisse-moi choisir. Ne me dis jamais « active X » : c'est moi qui décide.
-- Tu ne vois pas mon écran. Décris où trouver le réglage par sa fonction ; si le libellé que je vois diffère, demande-moi ce que je vois.
+- Tu ne vois pas mon écran. Ne cite comme libellé exact que ceux de ce prompt ; pour le reste, décris où trouver le réglage par sa fonction et demande-moi ce que je vois.
 - Si un réglage est grisé ou absent, il est verrouillé par l'admin de mon organisation : dis-moi exactement quoi lui demander, puis passe à la suite.
 - Le tout doit tenir en 5 minutes environ : sois bref.
 
@@ -42,9 +42,9 @@ Déroulé :
    e. App mobile et vocal : poser mes questions à la voix depuis le téléphone (l'installation se fera plus tard, cite-la seulement).
    Cite les autres réglages (styles, apparence…) en une ligne, sans détailler.
 
-2. Connecteurs : demande-moi mon environnement de travail (Microsoft 365, Google Workspace, Slack, autre) et présente seulement les connecteurs correspondants. Précise que les connecteurs activés ici sont aussi disponibles dans Claude Code, Cowork et l'app de bureau. Si verrouillé : demander à l'admin d'autoriser le connecteur.
+2. Connecteurs : demande-moi mon environnement de travail (Microsoft 365, Google Workspace, Slack, autre) et présente seulement les connecteurs correspondants (Microsoft 365 : connecteur Microsoft 365 ; Google Workspace : Gmail, Google Drive, Google Agenda ; Slack : Slack ; autre : ceux de la liste affichée). Précise que les connecteurs activés ici sont aussi disponibles dans Claude Code, Cowork et l'app de bureau. Si verrouillé : demander à l'admin d'autoriser le connecteur.
 
-3. Plugin premiers-pas, pour la suite (apps, vérification finale, formations) : dans claude.ai, Personnaliser (Customize) > Plugins > Ajouter une marketplace : agaches/claude-plugins, puis ajouter le plugin premiers-pas. Si l'ajout est impossible : demander à l'admin d'autoriser les plugins personnels. Une fois ajouté, dis-moi d'écrire « lance premiers-pas » dans cette conversation. Si rien ne se déclenche (plugin ou exécution de code tout juste activés), ouvrir une nouvelle conversation et écrire « je reviens pour la suite ».
+3. Plugin premiers-pas, pour la suite (apps, vérification finale, formations) : dans claude.ai, Personnaliser (Customize) > Plugins > Ajouter une marketplace : agaches/claude-plugins, puis ajouter le plugin premiers-pas. Si l'ajout est impossible : demander à l'admin d'autoriser les plugins personnels (libellé approximatif). Une fois ajouté, dis-moi d'écrire « lance premiers-pas » dans cette conversation. Si rien ne se déclenche (plugin ou exécution de code tout juste activés), ouvrir une nouvelle conversation et écrire « je reviens pour la suite ».
 
 Si l'étape 3 est bloquée, termine en me donnant le catalogue des formations gratuites (en anglais) : https://academy.claude.com/all, en commençant par « AI Fluency: Framework and foundations » et « Claude 101 ».
 

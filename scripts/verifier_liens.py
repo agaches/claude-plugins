@@ -2,7 +2,7 @@
 
 Usage : python3 scripts/verifier_liens.py FICHIER.md [FICHIER.md ...]
 Imprime une ligne par URL non ok ; code de sortie 1 si au moins une URL est ko.
-Un 403 persistant (site qui bloque les robots) est signalé « a-verifier » sans échouer.
+Un 403, 429 ou 503 (site qui bloque ou limite les robots) est signalé « a-verifier » sans échouer.
 """
 
 import re
@@ -12,6 +12,7 @@ import urllib.request
 
 _URL = re.compile(r"https?://[^\s<>()\[\]\"'`]+")
 _UA = "premiers-pas-link-check"
+_A_VERIFIER = (403, 429, 503)  # robots bloqués, quota, défi anti-robot : pas une preuve de lien mort
 
 
 def extraire_urls(texte: str) -> list[str]:
@@ -39,8 +40,8 @@ def verifier(url: str, timeout: float = 10.0) -> tuple[str, str]:
             code = _statut(url, "GET", timeout)
     except (urllib.error.URLError, OSError, ValueError) as e:
         return "ko", f"injoignable : {e}"
-    if code == 403:
-        return "a-verifier", "403, site qui bloque peut-être les robots : ouvrir à la main"
+    if code in _A_VERIFIER:
+        return "a-verifier", f"HTTP {code}, site qui bloque ou limite peut-être les robots : ouvrir à la main"
     if code >= 400:
         return "ko", f"HTTP {code}"
     return "ok", f"HTTP {code}"

@@ -14,11 +14,11 @@ class _Handler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_HEAD(self):
-        routes = {"/ok": 200, "/head-interdit": 405, "/robot": 403}
+        routes = {"/ok": 200, "/head-interdit": 405, "/robot": 403, "/quota": 429, "/indispo": 503}
         self._reponse(routes.get(self.path, 404))
 
     def do_GET(self):
-        routes = {"/ok": 200, "/head-interdit": 200, "/robot": 403}
+        routes = {"/ok": 200, "/head-interdit": 200, "/robot": 403, "/quota": 429, "/indispo": 503}
         self._reponse(routes.get(self.path, 404))
 
     def log_message(self, *args):
@@ -51,6 +51,12 @@ class TestVerifierLiens(unittest.TestCase):
 
     def test_403_est_avertissement(self):
         self.assertEqual(verifier(self.base + "/robot")[0], "a-verifier")
+
+    def test_429_est_avertissement(self):
+        self.assertEqual(verifier(self.base + "/quota")[0], "a-verifier")
+
+    def test_503_est_avertissement(self):
+        self.assertEqual(verifier(self.base + "/indispo")[0], "a-verifier")
 
     def test_injoignable_est_ko(self):
         self.assertEqual(verifier("http://127.0.0.1:9/", timeout=2)[0], "ko")
