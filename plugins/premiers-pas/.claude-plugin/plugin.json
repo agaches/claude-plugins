@@ -1,0 +1,10 @@
+{
+  "name": "premiers-pas",
+  "version": "0.1.0",
+  "description": "Premiers pas avec Claude sur un compte Team : un prompt à coller guide le réglage de claude.ai (paramètres, connecteurs), puis une skill guide l'installation des apps utiles et propose un programme de formation.",
+  "author": {
+    "name": "agaches"
+  },
+  "license": "MIT",
+  "keywords": ["onboarding", "démarrage", "formation"]
+}
