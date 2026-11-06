@@ -52,7 +52,7 @@ Détectable par Claude : oui, les outils du connecteur apparaissent.
 | Claude Code | Terminal ; profil tech. Ici : lien et formation seulement, pas de configuration | voir la doc | https://code.claude.com/docs |
 
 Office : le réglage « Let Claude work across files » est désactivé par défaut sur Team
-(activé sur Pro/Max).
+(activé sur Pro/Max) ; qui peut l'activer (utilisateur ou admin) : à relever dans l'UI.
 
 ## Admin Team
 
