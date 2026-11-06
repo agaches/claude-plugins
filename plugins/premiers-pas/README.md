@@ -26,26 +26,26 @@ Je débute avec Claude (compte Team). Guide-moi pour régler claude.ai, étape p
 Règles pour toi :
 - Une étape à la fois. Attends ma réponse avant de passer à la suite.
 - Pour chaque réglage : explique en 1-2 phrases à quoi il sert, les valeurs possibles et ce que ça change. Puis laisse-moi choisir. Ne me dis jamais « active X » : c'est moi qui décide.
-- Tu ne vois pas mon écran. Ne cite comme libellé exact que ceux de ce prompt ; pour le reste, décris où trouver le réglage par sa fonction et demande-moi ce que je vois.
+- Tu ne vois pas mon écran. Sur un compte Team, les menus ne sont pas aux mêmes endroits que dans la doc publique, et la traduction française ne suit pas l'anglais mot à mot : ne cite aucun chemin de menu ni libellé. Décris ce que fait le réglage et ce qu'il faut chercher, demande-moi ce que je vois, puis reprends mes mots à moi.
 - Si un réglage est grisé ou absent, il est verrouillé par l'admin de mon organisation : dis-moi exactement quoi lui demander, puis passe à la suite.
 - Le tout doit tenir en 5 minutes environ : sois bref.
 
 Déroulé :
 
-0. Demande-moi si mon interface claude.ai est en français ou en anglais. Ce prompt ne contient que les libellés anglais : si mon interface est en français, ne traduis pas les menus toi-même, donne le libellé anglais entre parenthèses et décris la fonction pour que je la repère. Puis fais-moi ouvrir un 2e onglet sur claude.ai, aller dans les Paramètres (Settings), et placer les deux onglets côte à côte : cette conversation à gauche, les paramètres à droite.
+0. Fais-moi ouvrir un 2e onglet sur claude.ai, ouvrir les paramètres (en général via mon nom ou mon avatar), et placer les deux onglets côte à côte : cette conversation à gauche, les paramètres à droite. Demande-moi de te lister les rubriques que je vois : tu t'en serviras pour me guider.
 
 1. Réglages, dans cet ordre :
-   a. Exécution de code et création de fichiers (Settings > Capabilities > « Code execution and file creation », ou « Create and edit files »). Précise qu'il est nécessaire pour l'étape 3. Si verrouillé : demander à l'admin « Paramètres de l'organisation > Plugins & skills > Policy : activer l'exécution de code et les Skills ».
+   a. Exécution de code et création de fichiers : permet à Claude de créer des fichiers et d'exécuter du code. Précise qu'il est nécessaire pour l'étape 3. Si verrouillé : demander à l'admin d'activer l'exécution de code et les Skills pour l'organisation.
    b. Préférences de profil : un texte que tu liras dans toutes mes conversations. Propose de m'aider à le rédiger en 2-3 questions (mon rôle, la langue, mes exigences, par ex. « source tes affirmations »).
    c. Recherche web, puis Research (recherche approfondie, qui s'active par conversation).
-   d. Mémoire (Settings > « Your Claude » ou « Memory ») : retrouver mes conversations passées, garder du contexte d'une conversation à l'autre.
-   e. Usage (Settings > Usage, libellé approximatif) : où voir ma consommation et mes limites. Rien à régler, juste savoir où regarder.
+   d. Mémoire : retrouver mes conversations passées, garder du contexte d'une conversation à l'autre.
+   e. Usage : où voir ma consommation et mes limites. Rien à régler, juste savoir où regarder.
    f. App mobile et vocal : poser mes questions à la voix depuis le téléphone (l'installation se fera plus tard, cite-la seulement).
    Cite les autres réglages (styles, apparence…) en une ligne, sans détailler.
 
 2. Connecteurs : demande-moi mon environnement de travail (Microsoft 365, Google Workspace, Slack, autre) et présente seulement les connecteurs correspondants (Microsoft 365 : connecteur Microsoft 365 ; Google Workspace : Gmail, Google Drive, Google Agenda ; Slack : Slack ; autre : ceux de la liste affichée). Précise que les connecteurs activés ici sont aussi disponibles dans Claude Code, Cowork et l'app de bureau. Si verrouillé : demander à l'admin d'autoriser le connecteur.
 
-3. Plugin premiers-pas, pour la suite (apps, vérification finale, formations) : dans claude.ai, Personnaliser (Customize) > Plugins > Ajouter une marketplace : agaches/claude-plugins, puis ajouter le plugin premiers-pas. Si l'ajout est impossible : demander à l'admin d'autoriser les plugins personnels (libellé approximatif). Une fois ajouté, dis-moi d'écrire « lance premiers-pas » dans cette conversation. Si rien ne se déclenche (plugin ou exécution de code tout juste activés), ouvrir une nouvelle conversation et écrire « je reviens pour la suite ».
+3. Plugin premiers-pas, pour la suite (apps, vérification finale, formations) : dans claude.ai, la section des plugins, ajouter la marketplace agaches/claude-plugins (à saisir tel quel), puis ajouter le plugin premiers-pas. Si l'ajout est impossible : demander à l'admin d'autoriser les plugins personnels. Une fois ajouté, dis-moi d'écrire « lance premiers-pas » dans cette conversation. Si rien ne se déclenche (plugin ou exécution de code tout juste activés), ouvrir une nouvelle conversation et écrire « je reviens pour la suite ».
 
 Si l'étape 3 est bloquée, termine en me donnant le catalogue des formations gratuites (en anglais) : https://academy.claude.com/all, en commençant par « AI Fluency: Framework and foundations » et « Claude 101 ».
 
@@ -86,6 +86,7 @@ Claude Code :
 
 - Comptes Team uniquement : la configuration d'un compte Pro/Max est très différente, le guide
   ne s'y applique pas.
-- Plusieurs libellés de menus de claude.ai ne sont pas encore relevés : le guide décrit les
-  réglages par leur fonction et vous demande ce que vous voyez.
+- Sur un compte Team, les menus ne sont pas aux mêmes endroits que dans la doc publique, et la
+  traduction française ne suit pas l'anglais mot à mot : le guide ne cite aucun chemin de menu,
+  il décrit chaque réglage par sa fonction et vous demande ce que vous voyez.
 - Les formations de Claude Academy sont en anglais.

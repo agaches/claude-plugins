@@ -5,10 +5,11 @@ description: Guide la suite des premiers pas avec Claude sur un compte Team, apr
 
 # Premiers pas avec Claude : la suite
 
-Prend le relais du prompt d'amorçage (README du plugin) une fois claude.ai réglé. Liens,
-libellés de menus et formations : **toujours** depuis `references/reference.md`, jamais de
-mémoire. Ne présenter comme libellé exact que ceux écrits dans ce fichier. Un libellé marqué `à relever dans l'UI` : décrire le réglage par sa fonction et
-demander à l'utilisateur ce qu'il voit.
+Prend le relais du prompt d'amorçage (README du plugin) une fois claude.ai réglé. Liens et
+formations : **toujours** depuis `references/reference.md`, jamais de mémoire. Menus : sur un
+compte Team, ils ne sont pas aux mêmes endroits que dans la doc publique, et la traduction
+française ne suit pas l'anglais. Ne citer **aucun chemin de menu ni libellé** : décrire le
+réglage par sa fonction, demander à l'utilisateur ce qu'il voit, puis reprendre ses mots.
 
 ## Règles
 
@@ -16,11 +17,10 @@ demander à l'utilisateur ce qu'il voit.
   puis il choisit. Jamais « installe X » ni « active X ». Un refus ou un « je passe » est
   accepté sans insister ni réexpliquer.
 - **Une étape à la fois**, réponse attendue avant la suite. Phrases courtes.
-- **Langue des libellés** : celle de son interface (FR ou EN). Si elle n'a pas été donnée plus
-  haut dans la conversation, la demander **une seule fois** ; sans réponse, donner les libellés
-  FR et EN côte à côte et ne plus la redemander.
-- **Bloqué par l'admin** (grisé, absent, « contactez votre administrateur ») : donner le réglage
-  exact à demander (section `## Admin Team`), puis passer à la suite. Ne pas reboucler.
+- **Libellés** : ceux que l'utilisateur a décrits plus haut dans la conversation, sinon la
+  fonction du réglage. Ne jamais traduire un libellé soi-même.
+- **Bloqué par l'admin** (grisé, absent, « contactez votre administrateur ») : dire à quoi sert le
+  réglage à demander (section `## Admin Team`), puis passer à la suite. Ne pas reboucler.
 - **Pas de capture d'écran avant la revue finale.**
 - Toutes les formations de Claude Academy sont en anglais : le dire une fois.
 
@@ -68,8 +68,8 @@ Pour chaque app de la liste (section `## Apps`) :
 Particularités :
 
 - App mobile : rappeler le vocal pour poser ses questions depuis le téléphone.
-- Office : un complément à la fois, seulement ceux retenus. Mentionner que le réglage « Let
-  Claude work across files » (libellé anglais confirmé par la doc) est désactivé par défaut sur Team, **sans dire qui l'active** (non
+- Office : un complément à la fois, seulement ceux retenus. Mentionner que le réglage qui
+  laisse Claude travailler sur plusieurs fichiers à la fois est désactivé par défaut sur Team, **sans dire qui l'active** (non
   précisé dans `references/reference.md`).
 - Claude Code : lien de doc et chapitre 4 du programme seulement. **Ne pas** guider sa
   configuration : c'est hors du périmètre de ce plugin.

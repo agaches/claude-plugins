@@ -2,12 +2,13 @@
 
 Relevé le : 2026-11-06
 
-Source unique des liens et des libellés de menus. Un libellé marqué `à relever dans l'UI`
-n'est pas confirmé par la doc : décrire le réglage par sa fonction et demander à
-l'utilisateur ce qu'il voit, ne jamais inventer de libellé.
+Source unique des liens et formations.
 
 **Comptes Team uniquement.** La configuration d'un compte Team n'a rien à voir avec celle d'un
-compte Pro/Max : ne pas transposer ces chemins ni ces réglages à une offre individuelle.
+compte Pro/Max. Sur Team, les menus ne sont pas aux mêmes endroits que dans la doc publique,
+et la traduction française ne suit pas l'anglais mot à mot. La colonne « Indice doc publique »
+sert seulement à reconnaître ce que l'utilisateur décrit : **ne jamais la lui citer** comme
+chemin ou libellé. Décrire le réglage par sa fonction, demander ce qu'il voit, reprendre ses mots.
 
 Vérifier les liens : `python3 scripts/verifier_liens.py <ce fichier>` (depuis la racine du repo).
 
@@ -15,15 +16,15 @@ Vérifier les liens : `python3 scripts/verifier_liens.py <ce fichier>` (depuis l
 
 Cible : compte Team. L'utilisateur choisit chaque valeur ; la skill explique.
 
-| Réglage | Libellé FR | Libellé EN | À quoi ça sert | Valeurs | Détectable par Claude |
-|---|---|---|---|---|---|
-| Exécution de code | Paramètres > Capacités > à relever dans l'UI | Settings > Capabilities > « Code execution and file creation » (nouvelle interface : « Create and edit files ») | Créer et modifier des fichiers, analyser des données. **Prérequis des skills et plugins.** | activé / désactivé | oui (outil d'exécution présent) |
-| Préférences de profil | à relever dans l'UI | à relever dans l'UI | Texte lu par Claude dans toutes les conversations : rôle, langue, exigences (ex. « source tes affirmations ») | texte libre, vide par défaut | oui (texte injecté dans le contexte) |
-| Recherche web | à relever dans l'UI | à relever dans l'UI | Claude cherche sur le web et cite ses sources | activé / désactivé | oui (outil de recherche présent) |
-| Research (recherche approfondie) | à relever dans l'UI | à relever dans l'UI | Recherche longue, plusieurs sources, rapport sourcé ; s'active par conversation | activé / désactivé, par conversation | incertain |
-| Mémoire | Paramètres > à relever dans l'UI | Settings > « Your Claude » (ancienne interface : Settings > Memory) : « Search and reference chats », « Generate memory from chats » | Retrouver les conversations passées, garder du contexte d'une conversation à l'autre. Désactivable pour une conversation (menu « + ») ; mode incognito (icône fantôme) | chaque bascule activée / désactivée | en partie (outils de recherche dans l'historique) |
-| Usage | à relever dans l'UI | à relever dans l'UI (Settings > Usage, libellé approximatif) | Voir sa consommation et où on en est de ses limites, pour savoir quand on approche du plafond | consultation seulement | non (capture ou déclaration) |
-| Vocal et app mobile | à relever dans l'UI | à relever dans l'UI | Poser ses questions à la voix depuis le téléphone | app installée ou non | non (capture ou déclaration) |
+| Réglage | Indice doc publique (pas Team, ne pas citer) | À quoi ça sert | Valeurs | Détectable par Claude |
+|---|---|---|---|---|
+| Exécution de code | Settings > Capabilities > « Code execution and file creation » / « Create and edit files » | Créer et modifier des fichiers, analyser des données. **Prérequis des skills et plugins.** | activé / désactivé | oui (outil d'exécution présent) |
+| Préférences de profil | profil, préférences | Texte lu par Claude dans toutes les conversations : rôle, langue, exigences (ex. « source tes affirmations ») | texte libre, vide par défaut | oui (texte injecté dans le contexte) |
+| Recherche web | outils de la conversation | Claude cherche sur le web et cite ses sources | activé / désactivé | oui (outil de recherche présent) |
+| Research (recherche approfondie) | outils de la conversation | Recherche longue, plusieurs sources, rapport sourcé ; s'active par conversation | activé / désactivé, par conversation | incertain |
+| Mémoire | Settings > « Your Claude » ou « Memory » : « Search and reference chats », « Generate memory from chats » | Retrouver les conversations passées, garder du contexte d'une conversation à l'autre. Désactivable pour une conversation (menu « + ») ; mode incognito (icône fantôme) | chaque bascule activée / désactivée | en partie (outils de recherche dans l'historique) |
+| Usage | Settings > Usage | Voir sa consommation et où on en est de ses limites, pour savoir quand on approche du plafond | consultation seulement | non (capture ou déclaration) |
+| Vocal et app mobile | app mobile | Poser ses questions à la voix depuis le téléphone | app installée ou non | non (capture ou déclaration) |
 
 Autres réglages (citer en une ligne, ne pas détailler) : styles, langue de l'interface,
 apparence, notifications.
@@ -34,7 +35,7 @@ Les connecteurs distants activés sur claude.ai sont aussi disponibles dans Clau
 et l'app de bureau (source : https://support.claude.com/en/articles/11725091-when-to-use-desktop-and-web-connectors).
 Les extensions de bureau, elles, ne marchent que dans l'app de bureau et Claude Code.
 
-Emplacement du menu : à relever dans l'UI. Doc : https://support.claude.com/en/articles/11176164
+Emplacement du menu : demander à l'utilisateur. Doc : https://support.claude.com/en/articles/11176164
 
 | Environnement | Connecteurs à présenter |
 |---|---|
@@ -55,21 +56,23 @@ Détectable par Claude : oui, les outils du connecteur apparaissent.
 | Claude in Chrome | Offre payante ; navigateur Chrome uniquement (pas les autres Chromium, pas le mobile) | Chrome Web Store | https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome |
 | Claude Code | Terminal ; profil tech. Ici : lien et formation seulement, pas de configuration | voir la doc | https://code.claude.com/docs |
 
-Office : le réglage « Let Claude work across files » est désactivé par défaut sur Team
-(activé sur Pro/Max) ; qui peut l'activer (utilisateur ou admin) : à relever dans l'UI.
+Office : le réglage qui laisse Claude travailler sur plusieurs fichiers (doc publique : « Let
+Claude work across files », ne pas citer) est désactivé par défaut sur Team
+(activé sur Pro/Max) ; qui peut l'activer (utilisateur ou admin) : non documenté.
 
 ## Admin Team
 
 Quand un réglage est grisé ou absent, c'est en général l'admin de l'organisation (souvent la
-personne qui a donné l'accès). Lui demander le réglage exact :
+personne qui a donné l'accès). Lui demander le réglage par sa fonction (l'admin retrouve le menu ; chemins de la doc publique,
+non garantis sur Team) :
 
 | Bloqué | À demander à l'admin |
 |---|---|
-| Exécution de code, skills | Paramètres de l'organisation > Plugins & skills > onglet Policy : activer l'exécution de code et les Skills (activés par défaut sur Team) |
-| Ajout d'une marketplace ou d'un plugin | Paramètres de l'organisation > Plugins & skills : autoriser les plugins personnels (libellé exact à relever dans l'UI) |
-| Connecteurs | Paramètres de l'organisation > connecteurs : autoriser le connecteur voulu (libellé à relever dans l'UI) |
+| Exécution de code, skills | Paramètres de l'organisation > Plugins & skills > onglet Policy : activer l'exécution de code et les Skills (activés par défaut sur Team, selon la doc) |
+| Ajout d'une marketplace ou d'un plugin | Paramètres de l'organisation > Plugins & skills : autoriser les plugins personnels |
+| Connecteurs | Paramètres de l'organisation > connecteurs : autoriser le connecteur voulu |
 | Compléments Office | Admin Microsoft 365 (Microsoft 365 Admin Center) : déployer ou autoriser le complément Claude |
-| Claude in Chrome | Paramètres de l'organisation : autoriser Claude in Chrome (libellé à relever dans l'UI) |
+| Claude in Chrome | Paramètres de l'organisation : autoriser Claude in Chrome |
 
 Doc : https://support.claude.com/en/articles/12512180-use-skills-in-claude ·
 https://support.claude.com/en/articles/13837440-use-plugins-in-claude
