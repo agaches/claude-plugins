@@ -93,8 +93,8 @@ deux** cycles sur une même `REQ` ⇒ `REQ` « bloquée », ses dépendants mis 
 
 Question de besoin (analyste ou diagnostic `besoin`) : mettre de côté la `REQ` et tout ce qui en
 dépend (`SPEC`, `ACT`, tests), terminer le reste, et placer la question **en tête du rapport** avec
-les options proposées. Quand l'utilisateur répond : ADR `docs/adr/NNN-<sujet>.md` (contexte,
-décision, conséquences), il met à jour le besoin, et une nouvelle passe `/build` traite le delta.
+les options proposées. Quand l'utilisateur répond : skill `adr` pour consigner sa décision, il met
+à jour le besoin, et une nouvelle passe `/build` traite le delta.
 
 ## 5. Arrêts immédiats
 

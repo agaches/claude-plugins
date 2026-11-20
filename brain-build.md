@@ -14,7 +14,7 @@ deux skills, trois agents, un script.
 
 | Phase | Commande | Qui | Ce qui se passe |
 |---|---|---|---|
-| Brain | `/brain` | vous et Claude | réflexion, passage sur le grill, besoin `docs/besoin.md` avec exigences `REQ-xxx` et critères d'acceptation |
+| Brain | `/brain` | vous et Claude | réflexion, passage sur le grill, relecture critique par personas, besoin `docs/besoin.md` avec exigences `REQ-xxx` et critères d'acceptation |
 | Build | `/build` | le pilote et ses agents | specs et plan (`analyst`), tests depuis le besoin (`tester`), code action par action (`dev`), vérifications, PR |
 | Recette | rapport | vous | questions en attente, matrice de traçabilité, incidents, avis de relecture ; vous mergez |
 
