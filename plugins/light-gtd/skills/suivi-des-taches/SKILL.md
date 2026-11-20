@@ -50,7 +50,9 @@ remplie : `Tâches récurrentes`, `Actions perso`, `Actions pro` (si activée), 
 la dernière ligne, statut d'ensemble).
 
 **Terminées** : lignes 1-2 = compteurs (formules, ne pas toucher), ligne 4 = en-têtes
-`Tâche` · `Date de fin` · `Deadline initiale`, tâches closes à partir de la ligne 5.
+`Tâche` · `Date de fin` · `Deadline initiale` · `Date de création`, tâches closes à partir de
+la ligne 5. Fichier antérieur sans `Date de création` : écrire cet en-tête en D4 avant la
+première clôture (rien d'autre à modifier, les compteurs ne lisent que A et B).
 
 ## 3. Règles de saisie
 
@@ -73,7 +75,7 @@ les colonnes et les sections par leur texte, jamais par une position supposée :
 | **Ajouter une tâche** | Insérer une ligne à la fin de sa section (juste avant le titre de section suivant). Remplir : `Perso : …` ou `Pro : …`, deadline, `En cours`, contexte déduit de la nature de l'action (demander si doute), et la première action dans la colonne du jour. |
 | **Mettre à jour** | Retrouver la ligne par le sens, pas par une égalité stricte. Si plusieurs lignes correspondent, demander. Écrire dans la colonne du jour selon les règles de saisie. |
 | **Passer en attente** | Statut `En attente`, noter ce qu'on attend dans la case du jour. Proposer un rappel de relance. |
-| **Clore** | Ajouter la tâche dans Terminées (intitulé, date du jour, deadline initiale), relire pour vérifier, puis seulement supprimer la ligne de Suivi. |
+| **Clore** | Ajouter la tâche dans Terminées (intitulé, date du jour, deadline initiale, date de création), relire pour vérifier, puis seulement supprimer la ligne de Suivi. Date de création = en-tête `JJ/MM` de la première colonne de jour remplie sur la ligne, écrit en `JJ/MM/AAAA` (année : la plus récente qui ne dépasse pas la date du jour). Si cette case est dans la plus ancienne colonne de jour restante, la tâche a pu commencer avant (colonnes de plus de 2 mois supprimées en revue) : laisser vide plutôt que deviner. |
 | **Poser un rappel** | Événement dans l'agenda des tâches : retrouver son identifiant par son nom (lu dans la Configuration) dans la liste des agendas, puis créer l'événement dans cet agenda, pas dans l'agenda principal. Titre = intitulé de la tâche, à la date demandée. |
 
 Deadline dictée en relatif (« avant vendredi ») : la convertir en `JJ/MM/AAAA` à partir de la

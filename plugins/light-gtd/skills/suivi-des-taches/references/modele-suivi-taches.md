@@ -38,14 +38,14 @@ Mise en forme :
 
 ## Onglet `Terminées`
 
-| | A | B | C |
-|---|---|---|---|
-| 1 | Terminées au total | `=COUNTA(A4:A)-1` | |
-| 2 | Terminées cette semaine | `=COUNTIFS(B4:B;">="&(TODAY()-WEEKDAY(TODAY();2)+1);B4:B;"<="&TODAY())` | |
-| 3 | | | |
-| 4 | Tâche | Date de fin | Deadline initiale |
+| | A | B | C | D |
+|---|---|---|---|---|
+| 1 | Terminées au total | `=COUNTA(A4:A)-1` | | |
+| 2 | Terminées cette semaine | `=COUNTIFS(B4:B;">="&(TODAY()-WEEKDAY(TODAY();2)+1);B4:B;"<="&TODAY())` | | |
+| 3 | | | | |
+| 4 | Tâche | Date de fin | Deadline initiale | Date de création |
 
-A1:A2 en gras. A4:C4 gras, fond gris clair. Ligne 4 figée. Les formules s'écrivent comme
+A1:A2 en gras. A4:D4 gras, fond gris clair. Ligne 4 figée. Les formules s'écrivent comme
 formules (pas comme texte). Le séparateur d'arguments suit la langue du tableur
 (`properties.locale`) : `;` pour `fr_FR` (testé), `,` pour `en_US`. Vérifier que B1 et B2
 affichent un nombre et non une erreur.
@@ -82,7 +82,7 @@ Règles de saisie
 Dans chaque case : ce qui a été fait, puis la prochaine action précédée de « à faire : ». Exemple : mail envoyé, à faire : attendre la réponse.
 Si rien n'a été fait ce jour-là : seulement la prochaine action. Exemple : à faire : appeler pour prendre rendez-vous.
 Nouvelle tâche : à la fin de sa section, avec deadline, statut, contexte et préfixe.
-Tâche finie : déplacée dans l'onglet Terminées avec sa date de fin.
+Tâche finie : déplacée dans l'onglet Terminées avec sa date de fin, sa deadline initiale et sa date de création.
 Colonnes de jours de plus de 2 mois : supprimées pendant la revue hebdo, après report de la dernière action des tâches immobiles. L'historique des versions (Fichier > Historique des versions) garde tout.
 
 Configuration
@@ -106,7 +106,9 @@ Contrôler, sans rien modifier :
 1. Les trois onglets existent (`Suivi`, `Terminées`, `README`).
 2. Suivi, ligne 1 : `Actions`, `Deadline`, `Statut`, `Contexte`, puis des dates.
 3. Suivi, colonne A : titres `Tâches récurrentes`, `Actions perso`, (`Actions pro`), `Global`, dans cet ordre, `Global` en dernier.
-4. Terminées, ligne 4 : `Tâche`, `Date de fin`, `Deadline initiale`.
+4. Terminées, ligne 4 : `Tâche`, `Date de fin`, `Deadline initiale`, `Date de création`.
+   `Date de création` absente (fichier antérieur à la v0.3) : la signaler sans bloquer ; elle
+   est ajoutée en D4 à la première clôture.
 5. README : bloc `Configuration` présent.
 6. README : ligne `Marqueur (ne pas modifier) : light-gtd-fichier-de-suivi` présente (absente
    des fichiers créés par la v0.1).
