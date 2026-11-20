@@ -10,6 +10,8 @@ Sous-commandes (sortie sur stdout ; code 0 = rien à signaler, 1 = problèmes, 2
          chaque test ajouté ou modifié entre base et head échoue sur base et passe sur head.
          CMD est lancé depuis la racine d'un worktree temporaire ; {test} y est remplacé par le
          chemin du test (sinon le chemin est ajouté en fin de commande).
+         Avec {case} dans CMD : un verdict par cas de test (--case-regex, défaut « def test… »),
+         chaque cas portant les REQ de son bloc (sinon celles du fichier) ; id « chemin::cas ».
 
 Conventions lues :
   docs/besoin.md  une REQ par titre « ### REQ-001 : ... », suivi d'une ligne « Critère : ... »
@@ -33,6 +35,7 @@ ID = re.compile(r"\b(REQ|SPEC|ACT)-\d{3}\b")
 HEADING = re.compile(r"^#{1,6}\s+(.*)$")
 CRITERE = re.compile(r"^\s*(?:[-*]\s*)?\**crit[eè]res?(?: d'acceptation)?\**\s*:", re.IGNORECASE)
 DEFAULT_TESTS = "tests/acceptance"
+DEFAULT_CASE = r"^\s*(?:async\s+)?def\s+(test\w*)"
 
 
 def ids(text, prefix):
@@ -133,19 +136,27 @@ def cmd_check(a):
 
 def cmd_matrix(a):
     reqs, specs, plan, tests = load(a.repo, a.tests)
-    status = {}
+    status, by_case = {}, {}
     if a.proves:
         for t in json.loads(read(a.proves)).get("tests", []):
-            status[t["test"]] = (t.get("depart", "?"), t.get("integration", "?"))
+            if t.get("cas"):
+                by_case.setdefault(t["test"], []).append(t)
+            else:
+                status[t["test"]] = (t.get("depart", "?"), t.get("integration", "?"))
     rows = ["| REQ | SPEC | ACT | test | départ | intégration |", "|---|---|---|---|---|---|"]
     for req in sorted(reqs):
         req_specs = [s for s, r in sorted(specs.items()) if req in r]
         acts = sorted({act for act, s in (plan or {}).items() if set(s) & set(req_specs)})
         spec_cell, act_cell = ", ".join(req_specs) or "∅", ", ".join(acts) or "∅"
-        req_tests = [t for t, r in sorted(tests.items()) if req in r] or ["∅"]
-        for t in req_tests:
-            dep, integ = status.get(t, ("?", "?")) if t != "∅" else ("-", "-")
-            rows.append(f"| {req} | {spec_cell} | {act_cell} | {t} | {dep} | {integ} |")
+        cells = []
+        for t in [t for t, r in sorted(tests.items()) if req in r]:
+            if t in by_case:
+                cells += [(f"{t}::{c['cas']}", c["depart"], c["integration"])
+                          for c in by_case[t] if req in c["reqs"]]
+            else:
+                cells.append((t, *status.get(t, ("?", "?"))))
+        for name, dep, integ in cells or [("∅", "-", "-")]:
+            rows.append(f"| {req} | {spec_cell} | {act_cell} | {name} | {dep} | {integ} |")
     print("\n".join(rows))
     return 0
 
@@ -176,10 +187,36 @@ def cmd_guard(a):
     return 1 if violations else 0
 
 
-def run_test(cwd, cmd, test):
-    # ponytail: granularité fichier (un fichier = un verdict) ; par fonction de test si besoin, via {test}::nom.
+def run_test(cwd, cmd, test, case=None):
     line = cmd.replace("{test}", shlex.quote(test)) if "{test}" in cmd else f"{cmd} {shlex.quote(test)}"
+    if case is not None:
+        line = line.replace("{case}", shlex.quote(case))
     return subprocess.run(line, shell=True, cwd=cwd, capture_output=True).returncode == 0
+
+
+COMMENT = re.compile(r"^\s*(#|//|--|;|@|/\*|\*)")
+
+
+def cases(content, case_regex):
+    """Cas de test d'un fichier : [(nom, REQ du cas)]. Le bloc d'un cas va des commentaires et
+    décorateurs collés au-dessus de sa ligne jusqu'au bloc du cas suivant. Un cas sans REQ dans son
+    bloc hérite des REQ du fichier."""
+    lines = content.splitlines()
+    pattern = re.compile(case_regex)
+    found = []
+    for i, line in enumerate(lines):
+        m = pattern.search(line)
+        if m:
+            start = i
+            while start > 0 and COMMENT.match(lines[start - 1]):
+                start -= 1
+            found.append((m.group(1), start))
+    file_reqs = ids(content, "REQ")
+    out = []
+    for k, (name, start) in enumerate(found):
+        end = found[k + 1][1] if k + 1 < len(found) else len(lines)
+        out.append((name, ids("\n".join(lines[start:end]), "REQ") or file_reqs))
+    return out
 
 
 def cmd_proves(a):
@@ -191,8 +228,15 @@ def cmd_proves(a):
             continue
         content = git(a.repo, "show", f"{head_sha}:{path}")
         reqs = ids(content, "REQ")
-        if reqs:  # les fichiers sans REQ (helpers, conftest) ne sont pas des tests du testeur
-            delta.append((path, reqs))
+        if not reqs:  # les fichiers sans REQ (helpers, conftest) ne sont pas des tests du testeur
+            continue
+        if "{case}" in a.cmd:
+            # ponytail: le filtre de cas du lanceur (-k de unittest/pytest) est une sous-chaîne :
+            # test_a lance aussi test_ab. Nommer les cas sans préfixe commun, ou un --cmd à nom exact.
+            for name, case_reqs in cases(content, a.case_regex):
+                delta.append((path, name, case_reqs))
+        else:
+            delta.append((path, None, reqs))
 
     results, found = [], []
     tmp = tempfile.mkdtemp(prefix="trace-proves-")
@@ -204,14 +248,18 @@ def cmd_proves(a):
             # Les tests de head posés sur le code de départ : ils doivent y échouer.
             # Les fichiers d'appui du dossier de tests (conftest, helpers) suivent aussi.
             git(wt_base, "checkout", head_sha, "--", a.tests)
-        for path, reqs in delta:
-            dep = "passe" if run_test(wt_base, a.cmd, path) else "échec"
-            integ = "passe" if run_test(wt_head, a.cmd, path) else "échec"
-            results.append({"test": path, "reqs": reqs, "depart": dep, "integration": integ})
+        for path, case, reqs in delta:
+            uid = f"{path}::{case}" if case else path
+            dep = "passe" if run_test(wt_base, a.cmd, path, case) else "échec"
+            integ = "passe" if run_test(wt_head, a.cmd, path, case) else "échec"
+            entry = {"id": uid, "test": path, "reqs": reqs, "depart": dep, "integration": integ}
+            if case:
+                entry["cas"] = case
+            results.append(entry)
             if dep == "passe":
-                found.append({"kind": "ne_prouve_rien", "id": path, "reqs": reqs})
+                found.append({"kind": "ne_prouve_rien", "id": uid, "reqs": reqs})
             if integ == "échec":
-                found.append({"kind": "echoue_integration", "id": path, "reqs": reqs})
+                found.append({"kind": "echoue_integration", "id": uid, "reqs": reqs})
     finally:
         for wt in (wt_base, wt_head):
             git(a.repo, "worktree", "remove", "--force", wt, check=False)
@@ -240,6 +288,8 @@ def main(argv=None):
         s.add_argument("--tests", default=DEFAULT_TESTS)
         if name == "proves":
             s.add_argument("--cmd", required=True)
+            s.add_argument("--case-regex", default=DEFAULT_CASE,
+                           help="motif d'un cas de test, groupe 1 = son nom (avec {case} dans --cmd)")
     a = p.parse_args(argv)
     a.tests = a.tests.strip("/")
     try:

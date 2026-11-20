@@ -1,6 +1,6 @@
 {
   "name": "brain-build",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Kit léger pour construire un produit avec des agents : phase Brain (besoin figé, exigences et critères d'acceptation), puis phase Build où un pilote orchestre des agents analyst, tester et dev lancés en processus séparés, avec traçabilité vérifiée par script jusqu'à la recette.",
   "author": {
     "name": "agaches"
