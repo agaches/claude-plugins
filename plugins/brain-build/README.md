@@ -67,7 +67,7 @@ termine.
 | `check` | chaque `REQ` a un critère, une spec et un test ; aucune spec, action ou test orphelin |
 | `matrix` | matrice `REQ → SPEC → ACT → tests → statut départ / intégration` |
 | `guard` | aucun commit `Agent: dev …` n'a touché aux tests du testeur |
-| `proves` | chaque test ajouté échoue sur la branche de départ et passe sur l'intégration |
+| `proves` | chaque test ajouté échoue sur la branche de départ et passe sur l'intégration, cas par cas si la commande de test le permet |
 
 Tests du script : `python3 -m unittest plugins/brain-build/scripts/test_trace.py`.
 

@@ -194,7 +194,7 @@ class Proves(GitRepo):
         code, out, _ = self.proves()
         self.assertEqual(code, 0, out)
         res = json.loads(out)
-        self.assertEqual(res["tests"], [{"test": "tests/acceptance/t1.py", "reqs": ["REQ-001"],
+        self.assertEqual(res["tests"], [{"id": "tests/acceptance/t1.py", "test": "tests/acceptance/t1.py", "reqs": ["REQ-001"],
                                          "depart": "échec", "integration": "passe"}])
 
     def test_passe_au_depart(self):
@@ -219,6 +219,79 @@ class Proves(GitRepo):
         out = subprocess.run(["git", "-C", self.root, "worktree", "list"],
                              capture_output=True, text=True).stdout
         self.assertEqual(len(out.strip().splitlines()), 1, out)
+
+
+class ProvesParCas(GitRepo):
+    # Trois cas dans un fichier : l'un prouve REQ-001, l'autre passe déjà au départ,
+    # le dernier ne cite aucune REQ et hérite de celles du fichier.
+    TEST = """\
+import subprocess, sys, unittest
+
+def run():
+    return subprocess.call([sys.executable, "wc.py"])
+
+
+class T(unittest.TestCase):
+    # REQ-001
+    def test_compte(self):
+        self.assertEqual(run(), 0)
+
+    # REQ-002
+    def test_toujours(self):
+        self.assertTrue(True)
+
+    def test_sans_req(self):
+        self.assertEqual(run(), 0)
+"""
+    CMD = f"{sys.executable} -m unittest {{test}} -k {{case}}"
+    P = "tests/acceptance/test_t1.py"
+
+    def setUp(self):
+        super().setUp()
+        self.commit("tests/__init__.py", "", "init")
+        self.commit("tests/acceptance/__init__.py", "", "init")
+        self.base = git(self.root, "rev-parse", "HEAD")
+        self.commit(self.P, "# REQ-003 (fichier)\n" + self.TEST, "test")
+        self.commit("wc.py", "pass\n", "feat")
+
+    def proves(self, *extra):
+        return run("proves", self.root, self.base, "HEAD", "--tests", "tests/acceptance",
+                   "--cmd", self.CMD, *extra)
+
+    def test_un_verdict_par_cas(self):
+        code, out, _ = self.proves()
+        self.assertEqual(code, 1, out)
+        res = {t["id"]: t for t in json.loads(out)["tests"]}
+        p = self.P
+        self.assertEqual(set(res), {f"{p}::test_compte", f"{p}::test_toujours", f"{p}::test_sans_req"})
+        compte = res[f"{p}::test_compte"]
+        self.assertEqual((compte["test"], compte["cas"], compte["depart"], compte["integration"]),
+                         (p, "test_compte", "échec", "passe"))
+        self.assertEqual({("ne_prouve_rien", f"{p}::test_toujours")}, kinds(out))
+
+    def test_req_du_cas_sinon_du_fichier(self):
+        _, out, _ = self.proves()
+        res = {t["cas"]: t["reqs"] for t in json.loads(out)["tests"]}
+        self.assertEqual(res["test_compte"], ["REQ-001"])
+        self.assertEqual(res["test_toujours"], ["REQ-002"])
+        self.assertEqual(res["test_sans_req"], ["REQ-001", "REQ-002", "REQ-003"])
+
+    def test_motif_de_cas(self):
+        code, out, _ = self.proves("--case-regex", r"def (test_compte)\b")
+        self.assertEqual(code, 0, out)
+        self.assertEqual([t["cas"] for t in json.loads(out)["tests"]], ["test_compte"])
+
+    def test_matrice_par_cas(self):
+        _, out, _ = self.proves()
+        proves = os.path.join(self.root, "proves.json")
+        with open(proves, "w") as f:
+            f.write(out)
+        write(self.root, "docs/besoin.md", BESOIN)
+        _, mat, _ = run("matrix", self.root, "--tests", "tests/acceptance", "--proves", proves)
+        p = self.P
+        self.assertIn(f"| REQ-001 | ∅ | ∅ | {p}::test_compte | échec | passe |", mat)
+        self.assertIn(f"| REQ-002 | ∅ | ∅ | {p}::test_toujours | passe | passe |", mat)
+        self.assertNotIn(f"| REQ-002 | ∅ | ∅ | {p}::test_compte |", mat)
 
 
 if __name__ == "__main__":

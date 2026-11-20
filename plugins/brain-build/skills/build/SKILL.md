@@ -65,7 +65,8 @@ analyst specs ─► analyst plan ─┬─► tester ecrire (worktree)      ─
    - `trace.py guard . <sha départ> HEAD --tests <tests_dir>` ⇒ aucune violation ; une violation
      ⇒ annuler le commit fautif (`git revert`) et relancer le `dev` en `correction` ;
    - `trace.py proves . <sha départ> HEAD --tests <tests_dir> --cmd "<test_cmd_un_test>"
-     > docs/build/runs/proves.json` ⇒ `ne_prouve_rien` renvoyé au `tester` (réécrire le test),
+     [--case-regex "<case_regex>"] > docs/build/runs/proves.json` (un verdict par cas si la
+     commande contient `{case}`) ⇒ `ne_prouve_rien` renvoyé au `tester` (réécrire le test),
      `echoue_integration` ⇒ section 3.
 6. Relire la PR toi-même (diff complet contre la branche de départ) : écarts aux specs, code mort,
    secrets, fichiers hors périmètre. Ton avis va dans le rapport, pas en commit.
