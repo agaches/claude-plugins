@@ -3,8 +3,10 @@
 Kit léger pour construire et maintenir un produit avec des agents, en gardant les bonnes pratiques
 de gestion de projet : besoin figé, specs, traçabilité, tests qui prouvent quelque chose, recette.
 
-- **Phase 1, Brain** (`/brain`, interactive) : réflexion puis passage sur le grill jusqu'à un
-  besoin figé, `docs/besoin.md`, avec des exigences `REQ-xxx` et leurs critères d'acceptation.
+- **Phase 1, Brain** (`/brain`, interactive) : réflexion, passage sur le grill, puis relecture
+  critique par personas (`/roast-me`) jusqu'à un besoin figé, `docs/besoin.md`, avec des
+  exigences `REQ-xxx` et leurs critères d'acceptation. Les décisions qui engagent sont consignées
+  en ADR (`/adr`).
 - **Phase 2, Build** (`/build`) : la session devient le **pilote**. Elle lance des agents
   `analyst`, `tester` et `dev` en **processus séparés** (`claude -p`), chacun avec son modèle et son
   effort, et les fait travailler jusqu'à la recette sans vous, sauf question sur le besoin.
@@ -16,11 +18,10 @@ recette sur un rapport court et mergez la PR.
 
 - Claude Code, `git`, Python 3 (le script de traçabilité n'utilise que la bibliothèque standard).
 - `gh` connecté, pour ouvrir la PR à la fin du build.
-- Pour la phase 1, deux plugins tiers (la skill `brain` sait continuer sans eux, en mode dégradé) :
+- Pour la phase 1, le plugin `superpowers` (skill `brainstorming` ; `brain` sait s'en passer) :
 
   ```
   claude plugin install superpowers@claude-plugins-official
-  claude plugin install mattpocock-skills@claude-plugins-official
   ```
 
 ## Installation
@@ -44,6 +45,15 @@ recette sur un rapport court et mergez la PR.
 
 Nouvelle version du besoin : `/brain` pour la rédiger, puis `/build` ne traite que les `REQ`
 ajoutées ou modifiées ; tous les tests existants servent de non-régression.
+
+## Skills d'appui
+
+Utilisables aussi seules, sur n'importe quel document ou décision :
+
+| Skill | Rôle |
+|---|---|
+| `/roast-me` | relecture critique par personas (métier, architecte, chef de projet, test « 12 ans », détecteur de bullshit…), chacun en sous-agent à contexte vierge ; seules les critiques soulevées par au moins deux personas sont retenues. Catalogue : [agaches/ia_field](https://github.com/agaches/ia_field/blob/main/doc_negative_review/catalogue_prompt.md) |
+| `/adr` | ADR dans `docs/adr/`, modèle simple, avancé ou exhaustif selon la décision. Modèles : [agaches/adr](https://github.com/agaches/adr) |
 
 ## Rôles
 
