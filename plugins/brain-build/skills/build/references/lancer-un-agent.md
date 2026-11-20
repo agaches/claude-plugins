@@ -11,7 +11,7 @@ timeout <agent_timeout> <agent_cmd> \
   --agent brain-build:<rôle> \
   --model <modèle> --effort <effort> --max-budget-usd <budget> \
   --permission-mode acceptEdits \
-  --allowedTools "Bash(git *)" "Bash(<test_cmd> *)" \
+  --allowedTools "Bash(git *)" "Bash(<test_cmd> *)" <agent_tools_extra> \
   -w <nom> \
   --output-format json \
   --json-schema "$(cat "$PLUGIN/schemas/agent-result.schema.json")" \
@@ -26,7 +26,10 @@ echo "exit $?" >> docs/build/runs/<nom>.err
   checkout principal.
 - `--allowedTools` prend plusieurs valeurs : ne jamais le placer juste avant le prompt, sinon le
   prompt est pris pour un outil. Le motif est `Bash(git *)` (avec espace).
-- L'analyste n'a besoin que de `Bash(git *)`.
+- L'analyste n'a besoin que de `Bash(git *)` (plus `agent_tools_extra`).
+- Un agent qui rend `blocked` / `env` avec « requires approval » sur une commande autorisée :
+  regarder `permission_denials` dans son JSON ; si la commande a été réécrite par un hook du poste,
+  proposer la règle à ajouter dans `agent_tools_extra`, sans élargir au-delà.
 - Si `--agent brain-build:<rôle>` est introuvable alors que le plugin est installé pour un autre
   périmètre, ajouter `--plugin-dir "$PLUGIN"`.
 
@@ -49,9 +52,20 @@ Jamais le contenu des fichiers, seulement de quoi les trouver :
 ```bash
 python3 - docs/build/runs/<nom>.json <<'EOF'
 import json, sys
+d = None
 try:
-    d = json.load(open(sys.argv[1]))
-except (OSError, ValueError):
+    # Un lanceur peut écrire autre chose sur stdout : garder la ligne JSON de type « result ».
+    for line in open(sys.argv[1], encoding="utf-8", errors="replace"):
+        if line.startswith("{"):
+            try:
+                o = json.loads(line)
+            except ValueError:
+                continue
+            if o.get("type") == "result":
+                d = o
+except OSError:
+    pass
+if d is None:
     print("failed: pas de JSON"); sys.exit()
 r = d.get("structured_output")
 print(json.dumps({"is_error": d.get("is_error"), "subtype": d.get("subtype"),
@@ -70,8 +84,13 @@ EOF
 
 ```bash
 git merge --no-ff worktree-<nom> -m "build: intègre <nom>"
+git worktree unlock .claude/worktrees/<nom>   # -w le verrouille au nom de la session
 git worktree remove .claude/worktrees/<nom> && git branch -d worktree-<nom>
 ```
+
+Si `remove` refuse à cause de fichiers non suivis : `git -C .claude/worktrees/<nom> status --short`.
+Seulement des artefacts (`__pycache__`, sorties de build) et la branche intégrée ⇒ `remove --force`.
+Autre chose ⇒ ne pas forcer, le noter en incident.
 
 **Conflit** (deux `dev` sur le même fichier) : ne jamais forcer. `git merge --abort`, garder la
 première action intégrée, supprimer le worktree de la seconde et la relancer sur la branche

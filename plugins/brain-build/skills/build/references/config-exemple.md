@@ -9,6 +9,7 @@
 
 agent_cmd: claude -p
 agent_timeout: 60m
+agent_tools_extra:
 
 ## Tests
 
@@ -36,6 +37,7 @@ normes: docs/normes.md, CONTRIBUTING.md
 |---|---|
 | `agent_cmd` | commande qui lance un agent ; reçoit ensuite les options de Claude Code |
 | `agent_timeout` | délai maximal d'un agent (`timeout` POSIX) ; au-delà, résultat `failed` |
+| `agent_tools_extra` | règles `--allowedTools` en plus de `Bash(git *)` et de la commande de test ; vide par défaut. Utile si un hook du poste réécrit les commandes (ex. `git status` devient `outil git status`) : ajouter la forme réécrite, `"Bash(outil git *)"` |
 | `test_cmd` | lance toute la suite de tests (non-régression) |
 | `test_cmd_un_test` | lance un seul fichier de test ; `{test}` est remplacé par son chemin (sert à `trace.py proves`) |
 | `tests_dir` | dossier des tests du testeur, interdit aux `dev` |
