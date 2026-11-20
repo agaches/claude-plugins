@@ -46,8 +46,8 @@ App Claude : sur claude.ai ou l'app de bureau, ouvrir
 
 - **Ajouter une marketplace** : `agaches/claude-plugins`, puis ajouter `light-gtd` ;
 - ou **Importer un plugin** : télécharger
-  [light-gtd.zip](https://github.com/agaches/claude-plugins/releases/download/light-gtd-v0.2.0/light-gtd.zip)
-  (release [light-gtd-v0.2.0](https://github.com/agaches/claude-plugins/releases/tag/light-gtd-v0.2.0))
+  [light-gtd.zip](https://github.com/agaches/claude-plugins/releases/download/light-gtd-v0.3.0/light-gtd.zip)
+  (release [light-gtd-v0.3.0](https://github.com/agaches/claude-plugins/releases/tag/light-gtd-v0.3.0))
   et l'importer.
 
 Le plugin est enregistré sur le compte : ses skills sont disponibles dans le chat (web, bureau,
@@ -63,7 +63,7 @@ Le fichier est retrouvé par un marqueur écrit dans son onglet README : il peut
 déplacé, mais ce marqueur ne doit pas être effacé. Vos réglages (agenda,
 contextes, section pro) sont dans le bloc « Configuration » de l'onglet README du fichier.
 
-## Limites (v0.2)
+## Limites (v0.3)
 
 - Pas de tâches planifiées ni d'envoi par mail : les points se demandent.
 - Un utilisateur, un fichier.
