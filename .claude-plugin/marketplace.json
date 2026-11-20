@@ -12,6 +12,12 @@
       "version": "0.1.0"
     },
     {
+      "name": "brain-build",
+      "source": "./plugins/brain-build",
+      "description": "Kit léger pour construire un produit avec des agents : phase Brain (besoin figé, exigences et critères d'acceptation), puis phase Build où un pilote orchestre des agents analyst, tester et dev lancés en processus séparés, avec traçabilité vérifiée par script jusqu'à la recette.",
+      "version": "0.1.0"
+    },
+    {
       "name": "idees-repas",
       "source": "./plugins/idees-repas",
       "description": "Idées de plats et de menus de la semaine tirées d'un répertoire familial (~600 plats), selon la saison, le temps disponible et les présences.",

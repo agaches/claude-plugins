@@ -1,0 +1,24 @@
+{
+  "title": "agent-result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "agent", "ids", "summary"],
+  "properties": {
+    "status": {"type": "string", "enum": ["done", "blocked", "failed"]},
+    "agent": {"type": "string", "enum": ["analyst", "tester", "dev"]},
+    "ids": {"type": "array", "items": {"type": "string", "pattern": "^(REQ|SPEC|ACT)-[0-9]{3}$"}},
+    "commits": {"type": "array", "items": {"type": "string"}},
+    "files": {"type": "array", "items": {"type": "string"}},
+    "summary": {"type": "string"},
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "detail"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["test", "code", "spec", "besoin", "env"]},
+        "detail": {"type": "string"},
+        "options": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

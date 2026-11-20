@@ -16,6 +16,7 @@ Mise à jour du catalogue : `/plugin marketplace update agaches`
 | Plugin | Description |
 |---|---|
 | [bento-mods](plugins/bento-mods) | Mods pour les decks Bento : garde-fous, audit du `#bento-doc`, panneau de plan du deck · [présentation](bento-mods.md) |
+| [brain-build](plugins/brain-build) | Construire un produit avec des agents : besoin figé (`/brain`), puis un pilote orchestre analyste, testeur et développeurs en processus séparés jusqu'à la recette (`/build`) · [présentation](brain-build.md) |
 | [idees-repas](plugins/idees-repas) | Idées de plats et menus de la semaine, selon la saison et les présences · [présentation](idees-repas.md) |
 | [light-gtd](plugins/light-gtd) | Gestion des tâches GTD dans un Google Sheets : dictée, point du matin, succès, revue hebdo · [présentation](light-gtd.md) |
 | [premiers-pas](plugins/premiers-pas) | Démarrer avec Claude sur un compte Team : un prompt guide le réglage de claude.ai, puis les apps utiles et un programme de formation · [présentation](premiers-pas.md) |
