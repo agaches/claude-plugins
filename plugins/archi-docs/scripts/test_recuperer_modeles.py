@@ -135,6 +135,39 @@ class TestRecupererModeles(unittest.TestCase):
         self.assertIn("- Ref : main", source)
         self.assertIn("- Commit : abc123", source)
 
+    def test_chemin_local_absent_sans_appel_reseau(self):
+        for chemin in ["./absent", "../absent"]:
+            code, _, err = self.lancer(chemin, self.cible, http_get=get_404)
+            self.assertEqual(code, 1)
+            self.assertIn("dossier introuvable", err)
+        self.assertFalse(self.cible.exists())
+
+    def test_maj_refuse_modeles_non_copies_par_l_outil(self):
+        self.cible.mkdir(parents=True)
+        (self.cible / "adr_simple.md").write_text("mon modele")
+        code, _, err = self.lancer(self.src, self.cible, "--maj")
+        self.assertEqual(code, 1)
+        self.assertIn("SOURCE.md", err)
+        self.assertEqual((self.cible / "adr_simple.md").read_text(), "mon modele")
+
+    def test_refus_ecrasement_sans_source_md_ne_conseille_pas_maj(self):
+        self.cible.mkdir(parents=True)
+        (self.cible / "adr_simple.md").write_text("mon modele")
+        code, _, err = self.lancer(self.src, self.cible)
+        self.assertEqual(code, 1)
+        self.assertNotIn("--maj", err)
+
+    def test_source_garde_la_ref_donnee(self):
+        code, _, _ = self.lancer("agaches/adr@main", self.cible, http_get=faux_get)
+        self.assertEqual(code, 0)
+        self.assertIn("- Source : agaches/adr@main", (self.cible / "SOURCE.md").read_text())
+
+    def test_source_md_de_la_source_n_est_pas_un_modele(self):
+        self.assertFalse(retenir("SOURCE.md"))
+        (self.src / "SOURCE.md").write_text("# Source des modèles\n")
+        self.lancer(self.src, self.cible)
+        self.assertIn("- Fichiers : adr_avance.md, adr_simple.md\n", (self.cible / "SOURCE.md").read_text())
+
     def test_github_404(self):
         code, _, err = self.lancer("agaches/inexistant", self.cible, http_get=get_404)
         self.assertEqual(code, 1)

@@ -17,7 +17,9 @@ une spec ou le glossaire.
 ## Premier usage dans un projet
 
 Les modèles vivent dans le projet, `docs/adr/modeles/`, versionnés avec lui : toute l'équipe écrit
-avec les mêmes. Si `docs/adr/modeles/SOURCE.md` est absent :
+avec les mêmes. Si `docs/adr/modeles/` existe déjà sans `SOURCE.md`, ce sont des modèles de
+l'utilisateur : les utiliser tels quels, proposer de créer `SOURCE.md` à la main avec leur tableau
+d'usage, et ne rien copier par-dessus. Si `docs/adr/modeles/` est absent :
 
 1. Proposer la source des modèles : `agaches/adr` (défaut), un autre repo GitHub
    (`owner/repo`, `owner/repo@ref` ou son URL), ou un dossier local. Expliquer en une ligne que les

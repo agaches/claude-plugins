@@ -34,14 +34,17 @@ usage (`docs/adr/modeles/`). Toute l'équipe écrit avec les mêmes modèles, vi
 3. « Mets à jour les modèles ADR » : nouvelle copie depuis la source, tableau conservé, diff à
    relire.
 
-Le script se lance aussi seul, depuis un clone de ce repo :
+Le script se lance aussi seul, depuis la racine du projet, en donnant son chemin (dans un clone
+de ce repo : `plugins/archi-docs/scripts/recuperer_modeles.py`) :
 
 ```
-python3 plugins/archi-docs/scripts/recuperer_modeles.py agaches/adr docs/adr/modeles
-python3 plugins/archi-docs/scripts/recuperer_modeles.py mon-org/mes-modeles@v2 docs/adr/modeles --maj
+python3 <chemin du script> agaches/adr docs/adr/modeles
+python3 <chemin du script> mon-org/mes-modeles@v2 docs/adr/modeles --maj
 ```
 
-Il copie les `*.md` à la racine de la source, sauf `README*` et `exemple*`.
+Il copie les `*.md` à la racine de la source, sauf `README*`, `exemple*` et `SOURCE.md`. Il
+refuse d'écrire dans un dossier qui contient des fichiers sans `SOURCE.md` : vos modèles maison ne
+sont jamais écrasés.
 
 ## Exemple
 

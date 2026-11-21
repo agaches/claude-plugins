@@ -28,20 +28,22 @@ _URL = re.compile(r"^https://github\.com/([\w.-]+/[\w.-]+?)(?:\.git)?(?:/tree/(.
 def parser_source(source):
     """Renvoie ("local", chemin, None) ou ("github", "owner/repo", ref ou None)."""
     chemin = Path(source)
+    if not chemin.exists() and source.startswith(("./", "../", "/", "~", ".\\", "..\\")):
+        raise ValueError(f"dossier introuvable : {source}")
     if chemin.exists():
         if not chemin.is_dir():
             raise ValueError(f"la source {source} est un fichier, un dossier est attendu")
         return ("local", str(chemin), None)
     for motif in (_URL, _DEPOT):
         m = motif.match(source)
-        if m:
+        if m and m.group(1).split("/")[0] not in (".", ".."):
             return ("github", m.group(1), m.group(2))
     raise ValueError(f"source non reconnue : {source} (attendu : dossier, owner/repo[@ref] ou URL GitHub)")
 
 
 def retenir(nom):
     bas = nom.lower()
-    return bas.endswith(".md") and not bas.startswith(("readme", "exemple"))
+    return bas.endswith(".md") and bas != "source.md" and not bas.startswith(("readme", "exemple"))
 
 
 def lire_local(dossier):
@@ -127,8 +129,14 @@ def main(argv=None, http_get=http_get_reseau):
     args = p.parse_args(argv)
     cible = Path(args.cible)
     try:
-        if cible.exists() and any(cible.iterdir()) and not args.maj:
-            raise ValueError(f"{cible} contient déjà des modèles ; relancer avec --maj pour les mettre à jour")
+        if cible.exists() and any(cible.iterdir()):
+            if not (cible / "SOURCE.md").exists():
+                raise ValueError(
+                    f"{cible} contient des fichiers qui n'ont pas été copiés par cet outil (pas de SOURCE.md) ;"
+                    " rien n'est écrasé : choisir un autre dossier ou le vider après accord"
+                )
+            if not args.maj:
+                raise ValueError(f"{cible} contient déjà des modèles ; relancer avec --maj pour les mettre à jour")
         genre, depot, ref = parser_source(args.source)
         if genre == "local":
             fichiers, ref, commit = lire_local(depot), "local", "non versionné"
@@ -137,7 +145,7 @@ def main(argv=None, http_get=http_get_reseau):
         if not fichiers:
             raise ValueError(f"aucun modèle trouvé dans {args.source} (*.md hors README et exemple)")
         anciens = _anciens_fichiers(cible / "SOURCE.md") if (cible / "SOURCE.md").exists() else []
-        changes = ecrire(fichiers, cible, depot if genre == "github" else args.source, ref, commit, args.maj)
+        changes = ecrire(fichiers, cible, args.source, ref, commit, args.maj)
     except urllib.error.HTTPError as e:
         print(f"erreur : GitHub a répondu {e.code} pour {e.url} (repo, ref ou droits d'accès ?)", file=sys.stderr)
         return 1
