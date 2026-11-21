@@ -6,7 +6,7 @@ de gestion de projet : besoin figé, specs, traçabilité, tests qui prouvent qu
 - **Phase 1, Brain** (`/brain`, interactive) : réflexion, passage sur le grill, puis relecture
   critique par personas (`/roast-me`) jusqu'à un besoin figé, `docs/besoin.md`, avec des
   exigences `REQ-xxx` et leurs critères d'acceptation. Les décisions qui engagent sont consignées
-  en ADR (`/adr`).
+  en ADR si une skill ADR est installée (par exemple le plugin `archi-docs`), sinon dans le besoin.
 - **Phase 2, Build** (`/build`) : la session devient le **pilote**. Elle lance des agents
   `analyst`, `tester` et `dev` en **processus séparés** (`claude -p`), chacun avec son modèle et son
   effort, et les fait travailler jusqu'à la recette sans vous, sauf question sur le besoin.
@@ -23,6 +23,11 @@ recette sur un rapport court et mergez la PR.
   ```
   claude plugin install superpowers@claude-plugins-official
   ```
+- Complément conseillé : le plugin `archi-docs` (skill `adr`) pour consigner les décisions en ADR.
+  Toute autre skill ADR installée convient ; sans skill ADR, les décisions vont dans la section
+  Décisions du besoin.
+
+  > 0.3.0 : la skill `adr` quitte `brain-build` et passe dans le plugin `archi-docs`.
 
 ## Installation
 
@@ -53,7 +58,6 @@ Utilisables aussi seules, sur n'importe quel document ou décision :
 | Skill | Rôle |
 |---|---|
 | `/roast-me` | relecture critique par personas (métier, architecte, chef de projet, test « 12 ans », détecteur de bullshit…), chacun en sous-agent à contexte vierge ; seules les critiques soulevées par au moins deux personas sont retenues. Catalogue : [agaches/ia_field](https://github.com/agaches/ia_field/blob/main/doc_negative_review/catalogue_prompt.md) |
-| `/adr` | ADR dans `docs/adr/`, modèle simple, avancé ou exhaustif selon la décision. Modèles : [agaches/adr](https://github.com/agaches/adr) |
 
 ## Rôles
 
