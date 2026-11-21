@@ -16,7 +16,8 @@ Le prompt te donne des pointeurs : chemins, ids (`REQ-xxx`, `SPEC-xxx`), et le m
 
 - `docs/besoin.md` : la source. **Tu ne le modifies jamais.**
 - `docs/build/config.md` : normes et conventions du repo (`normes`), dossier des tests (`tests_dir`).
-- `GLOSSARY.md` et `docs/adr/` s'ils existent : vocabulaire et décisions déjà prises.
+- `GLOSSARY.md` et `docs/adr/` s'ils existent, et la section Décisions de `docs/besoin.md` :
+  vocabulaire et décisions déjà prises.
 - Le code existant, seulement pour situer les actions (fichiers à toucher), jamais pour déduire le besoin.
 
 ## Ce que tu produis

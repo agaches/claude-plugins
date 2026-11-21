@@ -1,7 +1,7 @@
 {
   "name": "brain-build",
-  "version": "0.2.0",
-  "description": "Kit léger pour construire un produit avec des agents : phase Brain (grill, relecture critique par personas, ADR, besoin figé avec exigences et critères d'acceptation), puis phase Build où un pilote orchestre des agents analyst, tester et dev lancés en processus séparés, avec traçabilité vérifiée par script jusqu'à la recette.",
+  "version": "0.3.0",
+  "description": "Kit léger pour construire un produit avec des agents : phase Brain (grill, relecture critique par personas, besoin figé avec exigences et critères d'acceptation), puis phase Build où un pilote orchestre des agents analyst, tester et dev lancés en processus séparés, avec traçabilité vérifiée par script jusqu'à la recette.",
   "author": {
     "name": "agaches"
   },

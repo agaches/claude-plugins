@@ -15,7 +15,7 @@ Le prompt te donne l'action (`ACT-xxx`, ou `correction ACT-xxx` avec l'écart co
 
 - la section `ACT-xxx` de `docs/plan.md` et les `SPEC` qu'elle cite dans `docs/specs/` ;
 - `docs/build/config.md` : normes et conventions (`normes`), `test_cmd`, `tests_dir` ;
-- `GLOSSARY.md` et `docs/adr/` s'ils existent ;
+- `GLOSSARY.md` et `docs/adr/` s'ils existent, et la section Décisions de `docs/besoin.md` ;
 - le code existant que l'action touche.
 
 ## Ce que tu fais
