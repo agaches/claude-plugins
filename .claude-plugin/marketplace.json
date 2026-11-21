@@ -6,6 +6,12 @@
   "description": "Skills et plugins Claude Code d'agaches",
   "plugins": [
     {
+      "name": "archi-docs",
+      "source": "./plugins/archi-docs",
+      "description": "Documentation d'architecture avec Claude : ADR à partir de vos modèles (par défaut agaches/adr), copiés dans le projet. DAT à venir.",
+      "version": "0.1.0"
+    },
+    {
       "name": "bento-mods",
       "source": "./plugins/bento-mods",
       "description": "Mods Claude Code pour les decks Bento (.bento.html) : garde-fous et audit (bento-guard), panneau de plan du deck (bento-outline).",
