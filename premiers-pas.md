@@ -18,7 +18,7 @@ Elle explique chaque réglage et ses valeurs, et c'est vous qui choisissez.
 
 | Temps | Où | Ce qui se passe |
 |---|---|---|
-| Réglage de base (environ 5 min) | prompt à coller | réglages de claude.ai (exécution de code, préférences de profil, recherche, mémoire), connecteurs selon votre environnement, ajout du plugin |
+| Réglage de base (environ 5 min) | prompt à coller | réglages de claude.ai (exécution de code, préférences de profil, recherche, mémoire, où voir ses usages), connecteurs selon votre environnement, ajout du plugin |
 | Profil | skill | trois questions : Office ? Chrome ? profil tech ? |
 | Apps | skill | une par une, seulement celles qui vous servent : app de bureau, app mobile, Claude pour Excel, PowerPoint ou Word, Claude in Chrome, Claude Code (lien et formation) |
 | Revue finale | skill | Claude vérifie lui-même ce qu'il peut détecter et vous demande des captures pour le reste, puis compare avec **vos choix** |
@@ -50,9 +50,11 @@ Pour continuer plus tard, le plus simple est de revenir dans la même conversati
 
 ## Limites (v0.1)
 
-- Comptes Team uniquement.
-- Plusieurs libellés de menus de claude.ai ne sont pas encore relevés : le guide décrit les
-  réglages par leur fonction et vous demande ce que vous voyez.
+- Comptes Team uniquement : la configuration d'un compte Pro/Max est très différente, le guide
+  ne s'y applique pas.
+- Sur un compte Team, les menus ne sont pas aux mêmes endroits que dans la doc publique, et la
+  traduction française ne suit pas l'anglais mot à mot : le guide ne cite aucun chemin de menu,
+  il décrit chaque réglage par sa fonction et vous demande ce que vous voyez.
 - Les formations de Claude Academy sont en anglais.
 - La configuration de Claude Code n'est pas couverte (lien et formation seulement).
 
