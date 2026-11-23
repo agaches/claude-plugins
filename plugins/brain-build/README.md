@@ -14,6 +14,26 @@ de gestion de projet : besoin figé, specs, traçabilité, tests qui prouvent qu
 Vous êtes le client final : vous fixez le besoin, tranchez les questions de besoin, faites la
 recette sur un rapport court et mergez la PR.
 
+## Pourquoi un cycle en V
+
+Le kit applique un cycle en V : chaque niveau de description (besoin, specs, plan) a en face le
+niveau de test qui le vérifie, et le tout est tracé (`REQ → SPEC → ACT → tests`). Le but est de
+rendre le TDD **déterministe** et **fondé sur les specs, pas sur le code** :
+
+- les tests sont écrits par un agent distinct du développeur, depuis le besoin et les specs
+  seulement : un test ne peut pas se contenter de valider ce que le code fait ;
+- `proves` vérifie que chaque test échoue avant le code et passe après : un test déjà vert ne
+  prouve rien ;
+- un test en échec est jugé contre les specs, qui désignent la cause (test, code, spec ou besoin),
+  au lieu de plier le test au code ;
+- la traçabilité est vérifiée par script (`trace.py`), pas à l'œil.
+
+Ce que ça ne couvre pas : ce qui n'est pas écrit dans le besoin (ressenti, rendu, fonctionnement
+sur la pile réelle). Le kit convient donc surtout aux produits dont les règles comptent plus que le
+ressenti. Retours chiffrés sur trois produits réels : [docs/retours_sur_brain_build.md](docs/retours_sur_brain_build.md).
+Pourquoi tant de tests pour un petit code : [docs/volume_des_tests.md](docs/volume_des_tests.md).
+Comparaison avec Spec Kit, BMAD, OpenSpec et Kiro : [docs/comparaison_cadres_sdd.md](docs/comparaison_cadres_sdd.md).
+
 ## Prérequis
 
 - Claude Code, `git`, Python 3 (le script de traçabilité n'utilise que la bibliothèque standard).
