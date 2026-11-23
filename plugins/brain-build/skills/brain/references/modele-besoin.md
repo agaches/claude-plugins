@@ -34,9 +34,18 @@ Critère : <autre cas, si besoin>
 ### REQ-002 : <…>
 Critère : <…>
 
+## Réglages
+
+Valeurs qu'on ajustera à l'usage. Les critères les citent par leur nom ; elles ne sont pas des `REQ`.
+
+| Nom | Valeur | Unité | Note |
+|---|---|---|---|
+| <vitesse_ennemi> | <120> | <px/s> | <à régler après un essai> |
+
 ## Contraintes
 
 - <technique imposée, plateforme, performance avec seuil, licence, données>
+- <ce qui n'existe que pour la recette : état exposé, API de test>
 
 ## Décisions
 
@@ -56,6 +65,12 @@ choix, raison.>
 |---|---|
 | Critère : l'outil est rapide | Critère : `wc.py` sur un fichier de 10 Mo répond en moins de 2 s |
 | Critère : gérer les erreurs | Critère : `wc.py absent.txt` affiche `introuvable` et sort en code 2 |
+| Critère : l'ennemi part quand le joueur est à moins de 300 px | Critère : l'ennemi part quand le joueur entre dans sa portée (`portee_ennemi`, Réglages) |
+| Critère : passe à moins de 40 px pour au moins 15 graines sur 20 | Critère : l'ennemi se dirige vers la position du joueur au moment du départ |
+
+`trace.py check` signale (sans bloquer) les constantes d'un critère absentes de `## Réglages`, hors
+littéraux entre backticks, et les critères probabilistes : à confirmer comme contrainte ferme ou à
+déplacer.
 
 ## Nouvelle version
 

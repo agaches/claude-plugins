@@ -90,4 +90,25 @@ Autres constats : 5 à 7 assertions et 1,6 à 2,2 cas par critère, des tests un
 
 Détail, tableaux et pistes pour réduire le volume : [volume_des_tests.md](volume_des_tests.md).
 
-Suites déjà ouvertes sur le dépôt : #12 (dimensionnement), #13 (outillage), #14 (indépendance du testeur).
+## Ce que la version 0.4.0 en tire
+
+Les constats ci-dessus ont donné cinq issues (#12, #13, #14, #16, #17), traitées dans la 0.4.0. Rien
+n'est encore mesuré sur un nouveau build : ce sont des consignes et des contrôles, pas des résultats.
+
+| Constat | Changement |
+|---|---|
+| L1, L5 | Brain : prototype essayé par l'utilisateur pour un produit jugé à l'usage, validation finale du besoin par l'utilisateur même en autonomie. Build : vérifications `pile_reelle` et `humain` remontées par le testeur, revue visuelle des actions de rendu par le pilote |
+| L2 | Brain : étape « Dimensionner » (REQ, réglage ou choix de réalisation), rubrique `## Réglages` du besoin, avertissements de `trace.py check` (plus de 15 REQ, constante hors Réglages, critère probabiliste). Analyste : specs par module du code, plan proportionné |
+| L3 | Vérifications sur la pile réelle faites dès l'intégration des actions concernées (bilan, point 5) |
+| L7 | Worktrees créés par le pilote depuis la branche d'intégration, chemins absolus vers les runs, `trace.py` sur un projet en sous-dossier, motif de cas JS ancré, `< /dev/null` |
+| L8 | Testeur verrouillé au lancement (`--disallowedTools` sur le code et le plan, pas d'interpréteur), prompts du pilote sans fichier du code, `trace.py audit` qui relit les transcriptions. Diagnostic : specs en cause dans le prompt, relecture des règles générales |
+| Volume des tests | Testeur : une forme de test par forme de critère, un critère = une fonction de test, banc d'essai partagé, critère non testable = blocage. Dev : unitaires rattachés à une action, sans reprendre un critère |
+| Coûts (#17) | Modèle et effort du dev par complexité d'action, escalade sur échec, diagnostic en `sonnet` d'abord, `trace.py cost` par rôle et par action dans le rapport, modèles résolus notés |
+
+Rejoué sur les transcriptions du jeu A, `trace.py audit` retrouve les trois fuites décrites en L8 :
+exécution du générateur de niveau par le testeur, lecture de `index.html` et de fichiers du code
+après un prompt qui les citait, lecture d'un ancien document de conception.
+
+Reste à faire : rejouer un besoin existant (le jeu B, le plus petit) avec la nouvelle consigne du
+testeur et au moins deux configurations de modèles, puis consigner cas par critère, reprises, coût
+par rôle et défauts attrapés à la recette.
