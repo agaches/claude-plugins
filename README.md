@@ -15,6 +15,7 @@ Mise à jour du catalogue : `/plugin marketplace update agaches`
 
 | Plugin | Description |
 |---|---|
+| [archi-docs](plugins/archi-docs) | ADR à partir de vos modèles (par défaut agaches/adr) copiés dans le projet ; DAT à venir · [présentation](archi-docs.md) |
 | [bento-mods](plugins/bento-mods) | Mods pour les decks Bento : garde-fous, audit du `#bento-doc`, panneau de plan du deck · [présentation](bento-mods.md) |
 | [brain-build](plugins/brain-build) | Construire un produit avec des agents : besoin figé (`/brain`), puis un pilote orchestre analyste, testeur et développeurs en processus séparés jusqu'à la recette (`/build`) · [présentation](brain-build.md) |
 | [idees-repas](plugins/idees-repas) | Idées de plats et menus de la semaine, selon la saison et les présences · [présentation](idees-repas.md) |

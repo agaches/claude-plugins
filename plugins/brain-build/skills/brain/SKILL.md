@@ -57,7 +57,9 @@ laisser supposé.
   terme est tranché, l'écrire dans `GLOSSARY.md` (`**Terme** : définition`, sans détail
   d'implémentation).
 - **Décisions qui engagent.** Une décision coûteuse à défaire, prise entre de vraies options :
-  skill `adr`.
+  si une skill ADR est disponible dans la session (par exemple `archi-docs:adr` ou une skill de
+  l'utilisateur), l'invoquer ; sinon consigner la décision dans `docs/besoin.md`, section
+  Décisions (contexte, choix, raison, date), et signaler qu'une skill ADR est recommandée.
 
 **Fin du grill** : aucune question ouverte, chaque exigence candidate a au moins un critère avec
 un résultat observable exact, et l'utilisateur confirme qu'on s'est compris.

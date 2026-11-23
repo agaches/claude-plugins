@@ -19,7 +19,8 @@ le script de traçabilité `$PLUGIN/scripts/trace.py`.
   chaque agent est un **processus séparé** lancé par Bash (voir `references/lancer-un-agent.md`).
 - Un agent ne reçoit que des **pointeurs** (chemins, ids), jamais le contenu des fichiers.
 - Personne ne modifie `docs/besoin.md`, ni toi ni un agent. Un changement de besoin = décision de
-  l'utilisateur, consignée dans une ADR (`docs/adr/`).
+  l'utilisateur, consignée dans une ADR (`docs/adr/`) ou, sans skill ADR, dans la section
+  Décisions du besoin.
 - Tu ne tranches pas un test en échec : c'est le diagnostic du `tester` qui désigne la cause.
 - La matrice et les garde-fous viennent de `trace.py`, jamais de ta lecture des fichiers.
 - Pas de merge sur la branche principale ni de déploiement : la recette et le merge sont à
@@ -93,8 +94,10 @@ deux** cycles sur une même `REQ` ⇒ `REQ` « bloquée », ses dépendants mis 
 
 Question de besoin (analyste ou diagnostic `besoin`) : mettre de côté la `REQ` et tout ce qui en
 dépend (`SPEC`, `ACT`, tests), terminer le reste, et placer la question **en tête du rapport** avec
-les options proposées. Quand l'utilisateur répond : skill `adr` pour consigner sa décision, il met
-à jour le besoin, et une nouvelle passe `/build` traite le delta.
+les options proposées. Quand l'utilisateur répond : si une skill ADR est disponible dans la session (par exemple
+`archi-docs:adr` ou une skill de l'utilisateur), l'invoquer pour consigner sa décision ; sinon lui
+proposer le texte de la section Décisions du besoin (contexte, choix, raison, date) et signaler
+qu'une skill ADR est recommandée. Il met à jour le besoin, et une nouvelle passe `/build` traite le delta.
 
 ## 5. Arrêts immédiats
 

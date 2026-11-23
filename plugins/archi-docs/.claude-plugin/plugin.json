@@ -1,0 +1,10 @@
+{
+  "name": "archi-docs",
+  "version": "0.1.0",
+  "description": "Documentation d'architecture avec Claude : ADR à partir de vos modèles (par défaut agaches/adr), copiés dans le projet. DAT à venir.",
+  "author": {
+    "name": "agaches"
+  },
+  "license": "MIT",
+  "keywords": ["adr", "dat", "architecture", "documentation"]
+}

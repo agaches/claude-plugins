@@ -38,10 +38,15 @@ Critère : <…>
 
 - <technique imposée, plateforme, performance avec seuil, licence, données>
 
+## Décisions
+
+<vide si les décisions sont dans `docs/adr/`. Sinon, une puce par décision : date, contexte,
+choix, raison.>
+
 ## Références
 
 - Glossaire : `GLOSSARY.md`
-- Décisions : `docs/adr/`
+- Décisions : `docs/adr/` ou section Décisions ci-dessous
 - <documents, maquettes, exemples>
 ```
 

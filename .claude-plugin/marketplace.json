@@ -6,6 +6,12 @@
   "description": "Skills et plugins Claude Code d'agaches",
   "plugins": [
     {
+      "name": "archi-docs",
+      "source": "./plugins/archi-docs",
+      "description": "Documentation d'architecture avec Claude : ADR à partir de vos modèles (par défaut agaches/adr), copiés dans le projet. DAT à venir.",
+      "version": "0.1.0"
+    },
+    {
       "name": "bento-mods",
       "source": "./plugins/bento-mods",
       "description": "Mods Claude Code pour les decks Bento (.bento.html) : garde-fous et audit (bento-guard), panneau de plan du deck (bento-outline).",
@@ -14,8 +20,8 @@
     {
       "name": "brain-build",
       "source": "./plugins/brain-build",
-      "description": "Kit léger pour construire un produit avec des agents : phase Brain (grill, relecture critique par personas, ADR, besoin figé avec exigences et critères d'acceptation), puis phase Build où un pilote orchestre des agents analyst, tester et dev lancés en processus séparés, avec traçabilité vérifiée par script jusqu'à la recette.",
-      "version": "0.2.0"
+      "description": "Kit léger pour construire un produit avec des agents : phase Brain (grill, relecture critique par personas, besoin figé avec exigences et critères d'acceptation), puis phase Build où un pilote orchestre des agents analyst, tester et dev lancés en processus séparés, avec traçabilité vérifiée par script jusqu'à la recette.",
+      "version": "0.3.0"
     },
     {
       "name": "idees-repas",
