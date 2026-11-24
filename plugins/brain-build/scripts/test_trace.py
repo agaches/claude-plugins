@@ -371,9 +371,9 @@ class SousDossier(GitRepo):
                          ("tests/acceptance/t1.py", "échec", "passe"))
 
 
-def run_json(path, session, agent=None, ids=(), cost=0.0, model="claude-sonnet-5-5"):
+def run_json(path, session, agent=None, ids=(), cost=0.0, model="claude-sonnet-5-5", denied=()):
     d = {"type": "result", "session_id": session, "total_cost_usd": cost,
-         "modelUsage": {model: {}}}
+         "modelUsage": {model: {}}, "permission_denials": [{"tool_use_id": i} for i in denied]}
     if agent:
         d["structured_output"] = {"status": "done", "agent": agent, "ids": list(ids), "summary": "."}
     with open(path, "w", encoding="utf-8") as f:
@@ -396,8 +396,8 @@ class Audit(unittest.TestCase):
         path = os.path.join(self.transcripts, "-wt-tests-1", f"{session}.jsonl")
         with open(path, "w", encoding="utf-8") as f:
             f.write(json.dumps({"type": "user", "cwd": self.cwd}) + "\n")
-            for name, inp in uses:
-                content = [{"type": "tool_use", "name": name, "input": inp}]
+            for i, (name, inp) in enumerate(uses):
+                content = [{"type": "tool_use", "id": f"u{i}", "name": name, "input": inp}]
                 f.write(json.dumps({"type": "assistant", "cwd": self.cwd,
                                     "message": {"content": content}}) + "\n")
 
@@ -423,6 +423,15 @@ class Audit(unittest.TestCase):
         code, out, _ = self.audit("tests-1.json", "--allow", "docs/normes.md")
         self.assertEqual(code, 0, out)
         self.assertEqual(json.loads(out)["problems"], [])
+
+    def test_tentatives_refusees(self):
+        # Un accès bloqué par --disallowedTools reste listé, marqué refusé, sans faire échouer l'audit.
+        run_json(os.path.join(self.runs, "tests-1.json"), "s1", "tester", denied=("u0",))
+        self.transcript("s1", [("Read", {"file_path": "/wt/tests-1/docs/plan.md"})])
+        code, out, _ = self.audit("tests-1.json")
+        self.assertEqual(code, 0, out)
+        self.assertEqual([(p["kind"], p["refuse"]) for p in json.loads(out)["problems"]],
+                         [("lecture_plan", True)])
 
     def test_fuites(self):
         run_json(os.path.join(self.runs, "tests-1.json"), "s1", "tester")
