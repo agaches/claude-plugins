@@ -61,7 +61,7 @@ opus → claude-opus-x-y, sonnet → claude-sonnet-x-y ; pilote : <modèle de la
 | `projet_dir` | dossier du projet (celui qui contient `docs/besoin.md`) par rapport à la racine du dépôt ; `.` par défaut. Les agents sont lancés dedans, `trace.py` le reçoit comme `<repo>` |
 | `code_dirs` | fichiers et dossiers du code du produit, par rapport à `projet_dir` : le testeur en mode `ecrire` ne peut pas les lire (`--disallowedTools`) |
 | `test_cmd` | lance toute la suite de tests (non-régression), depuis `projet_dir` |
-| `test_cmd_un_test` | lance un seul test (sert à `trace.py proves`) : `{test}` = chemin du fichier, `{case}` = nom du cas. Avec `{case}`, un verdict par cas ; sans, un verdict par fichier. unittest : `python3 -m unittest {test} -k {case}` ; `node --test` : `node --test --test-name-pattern {case} {test}` |
+| `test_cmd_un_test` | lance un seul test (sert à `trace.py proves`) : `{test}` = chemin du fichier, `{case}` = nom du cas. Avec `{case}`, un verdict par cas ; sans, un verdict par fichier. Doit marcher sur un checkout neuf : y mettre l'étape de préparation que `test_cmd` suppose faite (Godot : `godot --headless --path <projet> --import >/dev/null 2>&1; godot … -- {test} {case}`). unittest : `python3 -m unittest {test} -k {case}` ; `node --test` : `node --test --test-name-pattern {case} {test}` |
 | `case_regex` | facultatif : motif d'un cas de test, groupe 1 = son nom (défaut : `def test…`, Python). JS, ancré en début de ligne pour ne pas prendre `split('\n')` pour un cas : `^\s*(?:it\|test)\(\s*['"]([^'"]+)` |
 | `tests_dir` | dossier des tests du testeur, interdit aux `dev` |
 | `normes` | fichiers de normes et conventions que lisent tous les agents |
@@ -86,10 +86,10 @@ plugin) :
   observée ;
 - sur un abonnement, le modèle compte aussi en **quota** : `opus` en consomme plus.
 
-`haiku` n'a pas été mesuré sur un build. Il a seulement été vérifié que
-`claude -p --agent brain-build:tester --model haiku --json-schema …` rend une sortie structurée
-valide. Pour le palier `simple`, le mettre à l'essai (`Modèle : haiku`) en comparant les reprises :
-un modèle moins cher qui échoue coûte deux fois.
+`haiku` a été essayé sur un seul build (jeu B rejoué, `docs/mesure_jeu_b_0.4.0.md` du plugin) :
+deux actions `simple` faites sans reprise, 0,02 $ chacune. C'est trop peu pour en faire le défaut :
+le mettre à l'essai (`Modèle : haiku`) en comparant les reprises, un modèle moins cher qui échoue
+coûte deux fois.
 
 ## Lanceur et facturation
 

@@ -456,6 +456,7 @@ def cmd_audit(a):
         name = os.path.splitext(os.path.basename(run_path))[0]
         d = result_of(run_path) or {}
         sid = d.get("session_id")
+        refused = {x.get("tool_use_id") for x in d.get("permission_denials") or []}
         hits = glob.glob(os.path.join(a.transcripts, "*", f"{sid}.jsonl")) if sid else []
         if not hits:
             found.append({"kind": "transcription_introuvable", "run": name, "session": sid})
@@ -482,13 +483,14 @@ def cmd_audit(a):
                     access = [classify(inp.get("file_path") or inp["notebook_path"], cwd, allowed, own, root)]
                 else:
                     access = []
+                denied = c.get("id") in refused  # tentative bloquée par --disallowedTools : le verrou a tenu
                 for hit in access:
-                    if hit and hit not in seen:
-                        seen.add(hit)
-                        found.append({"kind": hit[0], "run": name, "outil": tool, "cible": hit[1]})
+                    if hit and (hit, denied) not in seen:
+                        seen.add((hit, denied))
+                        found.append({"kind": hit[0], "run": name, "outil": tool, "cible": hit[1], "refuse": denied})
         runs.append({"run": name, "session": sid, "outils": uses})
     print(json.dumps({"runs": runs, "problems": found}, ensure_ascii=False, indent=2))
-    return 1 if found else 0
+    return 1 if any(not f.get("refuse") for f in found) else 0
 
 
 def euros(x):

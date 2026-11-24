@@ -92,8 +92,8 @@ Détail, tableaux et pistes pour réduire le volume : [volume_des_tests.md](volu
 
 ## Ce que la version 0.4.0 en tire
 
-Les constats ci-dessus ont donné cinq issues (#12, #13, #14, #16, #17), traitées dans la 0.4.0. Rien
-n'est encore mesuré sur un nouveau build : ce sont des consignes et des contrôles, pas des résultats.
+Les constats ci-dessus ont donné cinq issues (#12, #13, #14, #16, #17), traitées dans la 0.4.0, puis
+mesurées sur un rejeu du jeu B (fin de section).
 
 | Constat | Changement |
 |---|---|
@@ -109,6 +109,6 @@ Rejoué sur les transcriptions du jeu A, `trace.py audit` retrouve les trois fui
 exécution du générateur de niveau par le testeur, lecture de `index.html` et de fichiers du code
 après un prompt qui les citait, lecture d'un ancien document de conception.
 
-Reste à faire : rejouer un besoin existant (le jeu B, le plus petit) avec la nouvelle consigne du
-testeur et au moins deux configurations de modèles, puis consigner cas par critère, reprises, coût
-par rôle et défauts attrapés à la recette.
+Mesuré ensuite en rejouant le jeu B avec la 0.4.0 ([mesure_jeu_b_0.4.0.md](mesure_jeu_b_0.4.0.md)) :
+1,00 cas par critère au lieu de 1,59, 80 cas sur 81 prouvés, la même contradiction du besoin
+attrapée (plus tôt, par un dev), 8,74 $ d'agents au lieu de 10,79 $, aucune reprise.

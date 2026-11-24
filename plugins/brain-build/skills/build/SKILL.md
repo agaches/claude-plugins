@@ -86,12 +86,17 @@ analyst specs ─► analyst plan ─┬─► tester ecrire (worktree)      ─
    - `trace.py proves . <sha départ> HEAD --tests <tests_dir> --cmd "<test_cmd_un_test>"
      [--case-regex "<case_regex>"] > docs/build/runs/proves.json` (un verdict par cas si la
      commande contient `{case}`) ⇒ `ne_prouve_rien` renvoyé au `tester` (réécrire le test),
-     `echoue_integration` ⇒ section 3 ;
+     `echoue_integration` ⇒ section 3. `proves` rejoue chaque cas sur un checkout neuf du départ,
+     où le produit n'existe pas : lancer sans écran (`env -u DISPLAY -u WAYLAND_DISPLAY`) si la
+     commande peut ouvrir une fenêtre (moteur de jeu, navigateur), sinon une alerte s'affiche par
+     cas ; un cas `echoue_integration` qui passe dans `test_cmd` signale une étape de préparation
+     absente du checkout neuf (import d'assets, dépendances) à mettre dans `test_cmd_un_test` ;
    - `trace.py audit "$RUNS"/tests-*.json --tests <tests_dir> --test-cmd "<test_cmd>"
-     --allow <normes>` (les runs du testeur en mode `ecrire` seulement) ⇒ chaque lecture du plan
-     ou du code, lecture hors projet ou exécution d'interpréteur est une **fuite d'indépendance** :
-     les cas écrits pendant ce run sont relus contre les specs (diagnostic `test` si besoin), et la
-     fuite va au rapport ;
+     --allow <normes, séparées par des virgules>` (les runs du testeur en mode `ecrire` seulement)
+     ⇒ chaque lecture du plan ou du code, lecture hors projet ou exécution d'interpréteur qui a
+     abouti est une **fuite d'indépendance** : les cas écrits pendant ce run sont relus contre les
+     specs (diagnostic `test` si besoin), et la fuite va au rapport. Une tentative bloquée par les
+     verrous est marquée `"refuse": true` : elle va au rapport sans relecture ;
    - `trace.py cost "$RUNS"` ⇒ coûts par rôle et par action, lancements et reprises, pour le
      rapport ; noter dans la section « Modèles résolus » de la config les modèles de la colonne
      Modèles et celui de ta session (sinon « non mesuré »).

@@ -55,6 +55,10 @@ Comparaison avec Spec Kit, BMAD, OpenSpec et Kiro : [docs/comparaison_cadres_sdd
   > [config-exemple.md](skills/build/references/config-exemple.md) (`projet_dir`, `code_dirs`, Dev
   > par complexité) pour en profiter.
 
+  > 0.4.1 : mesure du jeu B rejoué ([docs/mesure_jeu_b_0.4.0.md](docs/mesure_jeu_b_0.4.0.md)) ;
+  > `trace.py audit` distingue les tentatives refusées par les verrous ; `proves` sans écran et sur
+  > checkout neuf documentés.
+
 ## Installation
 
 ```
@@ -119,7 +123,7 @@ termine.
 | `matrix` | matrice `REQ → SPEC → ACT → tests → statut départ / intégration` |
 | `guard` | aucun commit `Agent: dev …` n'a touché aux tests du testeur |
 | `proves` | chaque test ajouté échoue sur la branche de départ et passe sur l'intégration, cas par cas si la commande de test le permet |
-| `audit` | relit la transcription de chaque run du testeur : aucune lecture du plan ou du code, aucune exécution d'interpréteur, rien hors du projet |
+| `audit` | relit la transcription de chaque run du testeur : aucune lecture du plan ou du code, aucune exécution d'interpréteur, rien hors du projet ; une tentative bloquée par les verrous est marquée `refuse` et ne fait pas échouer l'audit |
 | `cost` | coût, lancements, reprises et modèles par rôle et par action, depuis les JSON des runs |
 
 `check` donne aussi des avertissements qui ne bloquent pas : besoin de plus de 15 `REQ`, constante
