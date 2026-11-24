@@ -22,7 +22,15 @@ Le prompt te donne l'action (`ACT-xxx`, ou `correction ACT-xxx` avec l'écart co
 
 - Le code de l'action, rien de plus : pas de refonte hors périmètre, pas de fonctionnalité non
   demandée par les specs.
-- Des tests unitaires pour la logique non triviale, **hors** de `tests_dir`.
+- Des tests unitaires pour la logique non triviale, **hors** de `tests_dir`. Ils sont rattachés à
+  l'action (`ACT-xxx` dans le nom ou en commentaire), pas à une `REQ` : un critère du besoin est
+  déjà couvert par les tests d'acceptation du testeur, ne le reprends pas. Un unitaire vérifie ce
+  que ces tests ne voient pas (fonction interne, cas limite d'un algorithme, valeur exacte d'un
+  réglage lue dans la table `## Réglages` du besoin).
+- Les valeurs de la rubrique `## Réglages` du besoin sont exposées comme la spec le dit (fichier ou
+  constante nommée), jamais dispersées en dur dans le code.
+- Une doublure (horloge, hasard, appel externe) se fait par l'interface que la spec déclare ; tu
+  n'écris pas de module destiné aux tests d'acceptation.
 - `test_cmd` doit passer avant ton commit, à l'exception des tests du testeur qui visent une action
   pas encore faite.
 - Commit avec le trailer `Agent: dev ACT-xxx` (une ligne à part en fin de message).

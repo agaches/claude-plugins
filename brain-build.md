@@ -25,11 +25,15 @@ structuré au pilote.
 ## Les garde-fous
 
 - Le testeur ne lit jamais le code ni le plan : ses tests viennent du besoin, pas de
-  l'implémentation.
+  l'implémentation. Il est verrouillé au lancement et ses lectures sont relues après coup.
 - Chaque test doit **échouer** sur la branche de départ et **passer** sur le résultat : sinon il ne
   prouve rien.
 - Aucun agent ne modifie le besoin ; une question de besoin vous remonte, sans bloquer le reste.
-- La matrice et les contrôles sont calculés par un script, pas estimés par le modèle.
+- La matrice, les contrôles et les coûts sont calculés par un script, pas estimés par le modèle.
+- Le besoin reste court : les valeurs qu'on règle à l'usage vont dans une table de réglages, pas
+  dans des exigences.
+- Le modèle fort n'est payé que là où il compte : l'analyste, les actions difficiles et les
+  reprises après échec.
 - Pas de merge ni de déploiement automatique.
 
 ## Installation

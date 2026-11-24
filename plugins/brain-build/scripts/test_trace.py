@@ -294,5 +294,192 @@ class T(unittest.TestCase):
         self.assertNotIn(f"| REQ-002 | ∅ | ∅ | {p}::test_compte |", mat)
 
 
+class Avertissements(unittest.TestCase):
+    """check signale sans échouer : besoin long, constante hors Réglages, critère probabiliste."""
+
+    def check(self, besoin):
+        with tempfile.TemporaryDirectory() as root:
+            complete_repo(root)
+            write(root, "docs/besoin.md", besoin)
+            code, out, _ = run("check", root, "--tests", "tests/acceptance")
+            res = json.loads(out)
+            return code, {(w["kind"], w["id"]) for w in res["warnings"]}, res["warnings"]
+
+    def test_avertissement_sans_echec(self):
+        # « sort en code 2 » : constante hors backticks et hors Réglages, signalée sans faire échouer.
+        code, found, _ = self.check(BESOIN)
+        self.assertEqual((code, found), (0, {("critere_constante", "REQ-002")}))
+
+    def test_constante_hors_reglages(self):
+        b = BESOIN + "\n### REQ-003 : vitesse\nCritère : l'ennemi avance de 120 px par seconde.\n"
+        b = b.replace("REQ-001, REQ-002", "REQ-001, REQ-002, REQ-003")
+        _, found, warnings = self.check(b)
+        self.assertIn(("critere_constante", "REQ-003"), found)
+        self.assertEqual(next(w for w in warnings if w["id"] == "REQ-003")["valeurs"], ["120"])
+
+    def test_constante_dans_reglages(self):
+        b = BESOIN + ("\n### REQ-003 : vitesse\nCritère : l'ennemi avance de 120 px par seconde.\n"
+                      "\n## Réglages\n\n| Nom | Valeur | Unité |\n|---|---|---|\n| vitesse | 120 | px/s |\n")
+        _, found, _ = self.check(b)
+        self.assertNotIn(("critere_constante", "REQ-003"), found)
+
+    def test_litteral_entre_backticks_ignore(self):
+        # « sort en code 2 » est hors backticks dans BESOIN : seul REQ-002 est signalé.
+        _, found, _ = self.check(BESOIN)
+        self.assertNotIn(("critere_constante", "REQ-001"), found)
+
+    def test_critere_probabiliste(self):
+        b = BESOIN + "\n### REQ-003 : départ\nCritère : passe à moins de `40 px` pour au moins 15 graines sur 20.\n"
+        _, found, _ = self.check(b)
+        self.assertIn(("critere_probabiliste", "REQ-003"), found)
+
+    def test_besoin_long(self):
+        b = BESOIN + "".join(f"\n### REQ-{i:03d} : r\nCritère : `ok`.\n" for i in range(3, 18))
+        code, found, _ = self.check(b)
+        self.assertIn(("besoin_long", "REQ"), found)
+        self.assertEqual(code, 1)  # REQ sans spec : ce sont les problèmes qui fixent le code
+
+
+class SousDossier(GitRepo):
+    """Projet dans un sous-dossier du dépôt : chemins et commandes relatifs au projet."""
+
+    def setUp(self):
+        super().setUp()
+        self.commit("jeu/wc.py", "import sys\nsys.exit(1)\n", "init jeu")
+        self.base = git(self.root, "rev-parse", "HEAD")
+        self.projet = os.path.join(self.root, "jeu")
+
+    def test_guard(self):
+        self.commit("jeu/tests/acceptance/x.py", "# REQ-001\n", "fix\n\nAgent: dev ACT-001")
+        code, out, _ = run("guard", self.projet, self.base, "HEAD", "--tests", "tests/acceptance")
+        self.assertEqual(code, 1, out)
+        self.assertEqual(json.loads(out)["violations"][0]["files"], ["tests/acceptance/x.py"])
+
+    def test_guard_ignore_tests_hors_projet(self):
+        self.commit("tests/acceptance/x.py", "# REQ-001\n", "fix\n\nAgent: dev ACT-001")
+        code, out, _ = run("guard", self.projet, self.base, "HEAD", "--tests", "tests/acceptance")
+        self.assertEqual(code, 0, out)
+
+    def test_proves(self):
+        self.commit("jeu/tests/acceptance/t1.py", Proves.TEST, "test")
+        self.commit("jeu/wc.py", "pass\n", "feat")
+        code, out, _ = run("proves", self.projet, self.base, "HEAD", "--tests", "tests/acceptance",
+                           "--cmd", Proves.CMD)
+        self.assertEqual(code, 0, out)
+        t = json.loads(out)["tests"][0]
+        self.assertEqual((t["id"], t["depart"], t["integration"]),
+                         ("tests/acceptance/t1.py", "échec", "passe"))
+
+
+def run_json(path, session, agent=None, ids=(), cost=0.0, model="claude-sonnet-5-5"):
+    d = {"type": "result", "session_id": session, "total_cost_usd": cost,
+         "modelUsage": {model: {}}}
+    if agent:
+        d["structured_output"] = {"status": "done", "agent": agent, "ids": list(ids), "summary": "."}
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("du bruit du lanceur\n" + json.dumps(d) + "\n")
+
+
+class Audit(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.runs = os.path.join(self.tmp.name, "runs")
+        self.transcripts = os.path.join(self.tmp.name, "projects")
+        os.makedirs(os.path.join(self.transcripts, "-wt-tests-1"))
+        os.makedirs(self.runs)
+        self.cwd = "/wt/tests-1"
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def transcript(self, session, uses):
+        path = os.path.join(self.transcripts, "-wt-tests-1", f"{session}.jsonl")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(json.dumps({"type": "user", "cwd": self.cwd}) + "\n")
+            for name, inp in uses:
+                content = [{"type": "tool_use", "name": name, "input": inp}]
+                f.write(json.dumps({"type": "assistant", "cwd": self.cwd,
+                                    "message": {"content": content}}) + "\n")
+
+    def audit(self, *names):
+        extra = [n for n in names if not n.endswith(".json")]
+        names = [n for n in names if n.endswith(".json")]
+        return run("audit", *[os.path.join(self.runs, n) for n in names], *extra, "--tests", "tests/acceptance",
+                   "--test-cmd", "node --test", "--transcripts", self.transcripts)
+
+    def test_lectures_autorisees(self):
+        run_json(os.path.join(self.runs, "tests-1.json"), "s1", "tester")
+        self.transcript("s1", [
+            ("Read", {"file_path": "/wt/tests-1/docs/specs/SPEC-001.md"}),
+            ("Read", {"file_path": "/wt/tests-1/docs/besoin.md"}),
+            ("Bash", {"command": "cat docs/build/config.md; ls docs; grep -n x tests/acceptance/a.test.js 2>/dev/null"}),
+            ("Bash", {"command": "node --test tests/acceptance"}),
+            ("Bash", {"command": "git add tests/acceptance && git commit -m 'test: couvre js/audio.js'"}),
+            ("Write", {"file_path": "/wt/tests-1/tests/acceptance/a.test.js"}),
+            ("Bash", {"command": "cd docs/specs && cat SPEC-*.md; find . -path ./.git -prune; node --version"}),
+            ("Bash", {"command": "cat docs/normes.md"}),
+            ("Read", {"file_path": os.path.join(self.transcripts, "-wt-tests-1", "s1", "tool-results", "x.txt")}),
+        ])
+        code, out, _ = self.audit("tests-1.json", "--allow", "docs/normes.md")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(json.loads(out)["problems"], [])
+
+    def test_fuites(self):
+        run_json(os.path.join(self.runs, "tests-1.json"), "s1", "tester")
+        self.transcript("s1", [
+            ("Read", {"file_path": "/wt/tests-1/docs/plan.md"}),
+            ("Bash", {"command": "node -e \"const {delta}=require('./js/delta.js')\""}),
+            ("Read", {"file_path": "/wt/tests-1/../ancien/conception.md"}),
+            ("Read", {"file_path": "/wt/tests-1/index.html"}),
+            ("Grep", {"pattern": "delta"}),
+            ("Bash", {"command": "git show HEAD:js/level.js"}),
+        ])
+        code, out, _ = self.audit("tests-1.json")
+        self.assertEqual(code, 1)
+        found = [(p["kind"], p["cible"]) for p in json.loads(out)["problems"]]
+        self.assertEqual(found, [
+            ("lecture_plan", "docs/plan.md"),
+            ("execution", "node -e \"const {delta}=require('./js/delta.js')\""),
+            ("lecture_code", "js/delta.js"),
+            ("lecture_hors_projet", "/wt/ancien/conception.md"),
+            ("lecture_code", "index.html"),
+            ("lecture_code", "."),
+            ("lecture_code", "js/level.js"),
+        ])
+
+    def test_agent_lance_hors_du_projet(self):
+        # Agent lancé à la racine du dépôt, projet dans jeu/ : --root rend les chemins au projet.
+        run_json(os.path.join(self.runs, "tests-1.json"), "s1", "tester")
+        self.transcript("s1", [("Bash", {"command": "cat jeu/docs/besoin.md jeu/js/a.js"})])
+        _, out, _ = self.audit("tests-1.json", "--root", "jeu")
+        self.assertEqual([p["cible"] for p in json.loads(out)["problems"]], ["js/a.js"])
+
+    def test_transcription_introuvable(self):
+        run_json(os.path.join(self.runs, "tests-2.json"), "absente", "tester")
+        code, out, _ = self.audit("tests-2.json")
+        self.assertEqual(code, 1)
+        self.assertEqual([p["kind"] for p in json.loads(out)["problems"]], ["transcription_introuvable"])
+
+
+class Cost(unittest.TestCase):
+    def test_couts_par_role_et_action(self):
+        with tempfile.TemporaryDirectory() as runs:
+            run_json(os.path.join(runs, "specs.json"), "a", "analyst", ["SPEC-001"], 2.0, "claude-opus-5-5")
+            run_json(os.path.join(runs, "tests-1.json"), "b", "tester", ["REQ-001"], 1.0)
+            run_json(os.path.join(runs, "ACT-001.json"), "c", "dev", ["ACT-001"], 0.5)
+            run_json(os.path.join(runs, "ACT-001-r2.json"), "d", "dev", ["ACT-001"], 0.7, "claude-opus-5-5")
+            run_json(os.path.join(runs, "ACT-002.json"), "e", None, (), 0.25)  # failed, sans structured_output
+            run_json(os.path.join(runs, "diag-REQ-001-1.json"), "f", "tester", ["REQ-001"], 0.3)
+            code, out, _ = run("cost", runs)
+        self.assertEqual(code, 0, out)
+        self.assertIn("| analyst | 1 | 0 | 2,00 | claude-opus-5-5 |", out)
+        self.assertIn("| tester | 1 | 0 | 1,00 | claude-sonnet-5-5 |", out)
+        self.assertIn("| dev | 3 | 1 | 1,45 | claude-opus-5-5, claude-sonnet-5-5 |", out)
+        self.assertIn("| diagnostic | 1 | 0 | 0,30 | claude-sonnet-5-5 |", out)
+        self.assertIn("| ACT-001 | 2 | 1 | 1,20 |", out)
+        self.assertIn("| ACT-002 | 1 | 0 | 0,25 |", out)
+        self.assertIn("Total : 4,75 $", out)
+
+
 if __name__ == "__main__":
     unittest.main()

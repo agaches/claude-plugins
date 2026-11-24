@@ -33,12 +33,26 @@ Couvre : REQ-001, REQ-002
 ## Comportement attendu
 <entrées, sorties, règles, cas limites, messages d'erreur exacts>
 
+## Interface de test
+<comment un test pilote et observe ce module sans lire le code : commande, fonctions exposées et
+leurs signatures, état initial à poser, résultat à lire ; doublures autorisées (horloge, hasard,
+appel externe) et comment les injecter>
+
 ## Hors périmètre
 <ce que cette spec ne couvre pas>
 ```
 
-Chaque `REQ` du besoin (ou du delta) est couverte par au moins une spec. Une spec qui ne cite aucune
-`REQ` existante est interdite.
+- Chaque `REQ` du besoin (ou du delta) est couverte par au moins une spec. Une spec qui ne cite
+  aucune `REQ` existante est interdite.
+- **Découpe par module du code, pas par `REQ`** : environ une spec par fichier ou groupe de fichiers
+  qui vont ensemble (cœur, génération, rendu, entrées et page, persistance…). Une spec couvre donc
+  souvent plusieurs `REQ`. Un petit produit tient en 4 à 6 specs.
+- **Interface de test** : le testeur n'a que les specs. Tout ce dont il a besoin pour écrire un test
+  (point d'entrée, valeur produite par le code comme une position dans un niveau généré, doublure)
+  y est écrit. Une doublure non déclarée ici est interdite aux tests d'acceptation.
+- **Réglages** : une valeur de la rubrique `## Réglages` du besoin est citée par son nom, avec
+  l'endroit où le code l'expose (fichier de réglages, constante exportée). Elle n'est jamais
+  recopiée en dur dans une règle.
 
 **Mode `plan`** : `docs/plan.md`, une section par action :
 
@@ -48,12 +62,26 @@ Chaque `REQ` du besoin (ou du delta) est couverte par au moins une spec. Une spe
 Specs : SPEC-001
 Dépend de : aucune | ACT-00x
 Fichiers : <chemins créés ou modifiés>
+Complexité : simple | standard | difficile
+Rendu : oui            (seulement si l'action produit un rendu visuel)
 
 <ce qu'il faut faire, en quelques lignes>
 ```
 
-Découpe pour que les actions indépendantes ne touchent pas les mêmes fichiers : deux `dev` en
-parallèle sur un même fichier finissent en conflit.
+- Découpe pour que les actions indépendantes ne touchent pas les mêmes fichiers : deux `dev` en
+  parallèle sur un même fichier finissent en conflit.
+- Proportionne : pour un petit produit, une action par spec suffit souvent. Ne découpe pas plus
+  fin que ce que deux `dev` peuvent faire en parallèle.
+- **Complexité** : elle fixe le modèle et l'effort du `dev` (paliers dans `docs/build/config.md`).
+
+  | Complexité | Exemples |
+  |---|---|
+  | `simple` | configuration, réglages, texte, échafaudage, migration mécanique |
+  | `standard` | logique métier, API, composant (le cas courant) |
+  | `difficile` | algorithme, rendu, concurrence, sécurité ; une phrase dit pourquoi |
+
+  Dans le doute entre deux paliers, prends le plus bas : le pilote relance au palier au-dessus en
+  cas d'échec.
 
 **Mode `correction SPEC-xxx`** : mets la spec à jour selon le diagnostic reçu ; ajoute en bas une
 ligne `Modifiée : <date> : <raison>`. Mets à jour les actions du plan concernées.
